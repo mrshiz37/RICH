@@ -1,12 +1,13 @@
 <ion-view view-title="Record Remote">
   <ion-content>
+    <div>{{fromBackend}}</div>
     <button ng-click="updateHtml()" ng-show="buttonStep == 0">{{buttonState[0].state}}</button>
     <button ng-click="updateHtml()" ng-show="buttonStep == 1">{{buttonState[1].state}}</button>
     <button ng-click="updateHtml()" ng-show="buttonStep == 2">{{buttonState[2].state}}</button>
     <button ng-click="updateHtml()" ng-show="buttonStep == 3">{{buttonState[3].state}}</button>
 
-    <select ng-model="selectedValue" ng-show="buttonStep == 2">
-      <option ng-repeat="option in dropDown" value="{{option.value}}">{{option.option}}</option>
+    <select ng-model="selectedButton" ng-show="buttonStep == 2">
+      <option ng-repeat="button in buttons">{{button.option}}</option>
     </select>
 
 

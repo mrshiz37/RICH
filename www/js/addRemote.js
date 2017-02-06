@@ -1,7 +1,8 @@
 angular.module('addRemote', [])
-  .controller('addRemoteCtrl', function($scope, $http) {
-    $http.get('addRemoteBackend/getFiles').success(function(data) {
+  .controller('addRemoteCtrl', function($scope, $http, $state) {
+    $http.get('http://192.168.1.144:3000/addRemoteBackend/getFiles').success(function(data) {
       $scope.files = data;
+      console.log(data);
     });
 
     $scope.go = function(path) {
@@ -9,17 +10,13 @@ angular.module('addRemote', [])
     };
   })
   .controller('recordRemoteCtrl', function ($scope, $http, $location) {
+    $http.get('/files/lirc_namespace.json').success(function(data) {
+      $scope.buttons = data;
+    });
     $scope.buttonStep = 0;
-    $scope.fromBackend = 'Initial Data';
+    $scope.fromBackend = 'When you are ready to begin, press the button below.';
     var counter = 0;
-    $scope.selectedValue='';
-    $scope.dropDown = [
-      {option:'something a',value:'a value'},
-      {option:'something b',value:'b value'},
-      {option:'something c',value:'c value'},
-      {option:'something d',value:'d value'},
-    ];
-
+    $scope.selectedButton='';
     $scope.buttonState = [
       {step:0, state:"Begin"},
       {step:1, state:"Press Enter"},
@@ -35,7 +32,7 @@ angular.module('addRemote', [])
     };
 
     function collectBackend() {
-      $http.get('addRemoteBackend',{params:{selected:$scope.selectedValue}}).success(function(data) {
+      $http.get('addRemoteBackend',{params:{selected:$scope.selectedButton}}).success(function(data) {
         $scope.fromBackend = data + counter;
         counter++;
       });
