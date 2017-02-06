@@ -5,16 +5,23 @@
 - cordova
 
 
-## Making changes to Master
+## Making changes to Master Branch
 1. Make a new branch and switch to it
     - git checkout -b name_of_new_branch
-    - You'll be committing changes to this branch
-    - If you want to push the new branch to the repository: git push origin branch_name
-2. Once you're ready to merge back to master check it out and merge
-    - git checkout master
-    - git merge name_of_new_branch
-    - git branch -d new_of_new_branch  
-        - this will delete old branch
-       
+    - You'll be committing changes to this branch locally
+2. Push your commits to remote branch
+    - git push
+    - IF you need set a remote upstream:
+        - git push set-upstream origin name_of_new_branch
+
+2. Once you're ready to merge back to master branch go on create a pull request
+    - Option 1: go on git hub --> Go to branches --> new pull request
+
+# Why are we doing this?
+Keep our releases to master as feature sets and keep our master clean while allowing colaborative work
+
+
+
+
 ## Learning Git
 1. http://rogerdudler.github.io/git-guide/
