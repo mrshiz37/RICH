@@ -49,8 +49,8 @@ angular.module('main', ['ionic', 'main.controllers', 'addRemote'])
           }
         }
       })
-      .state('app.adddevice', {
-        url: '/adddevice',
+      .state('app.addremote', {
+        url: '/addremote',
         views: {
           'menuContent': {
             templateUrl: 'templates/addRemote.html',
