@@ -1,13 +1,23 @@
 <ion-view view-title="Add Remote">
   <ion-content>
-    <p>
-      Please select a remote from the drop-down below:
-    </p>
-    <select ng-model="selectedFile" ng-options="file.fileName for file in files"></select>
-    <h1>OR:</h1>
-    <p>
-      Record a new remote:
-    </p>
-    <button ng-click="go('app.recordremote')">Record!</button>
+    <div class="padding">
+      <p>Please choose a remote brand from the list below:</p>
+      <select ng-model="formData.selectedBrand" ng-options="brand.brandName for brand in brands" ng-change="getRemoteModels()"></select>
+      <p>Next, choose the model number of your remote from the list below:</p>
+      <select ng-model="formData.selectedModel" ng-options="model.modelName for model in models" ng-disabled="!formData.selectedBrand"></select>
+    </div>
+    <div class="padding">
+      <label class="item item-input">
+        <input type="text" placeholder="Enter a custom name..." ng-model="formData.custom_name" ng-disabled="!(formData.selectedBrand && formData.selectedModel)">
+      </label>
+    </div>
+    <div class="padding">
+      <button class="button button-block button-positive" ng-click="addRemote()" ng-disabled="!(formData.selectedBrand && formData.selectedModel)">Add Remote</button>
+    </div>
+
+    <p>Don't see your remote? Click below to record your own!</p>
+    <div class="padding">
+      <button class="button button-block button-positive" ng-click="go('app.recordremote')">Record Remote</button>
+    </div>
   </ion-content>
 </ion-view>
