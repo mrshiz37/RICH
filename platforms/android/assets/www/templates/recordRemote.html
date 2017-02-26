@@ -1,0 +1,24 @@
+<ion-view view-title="Record Remote">
+  <ion-content>
+    <div>{{fromBackend}}</div>
+    <button ng-click="updateHtml()" ng-show="buttonStep == 0">{{buttonState[0].state}}</button>
+    <button ng-click="updateHtml()" ng-show="buttonStep == 1">{{buttonState[1].state}}</button>
+    <button ng-click="updateHtml()" ng-show="buttonStep == 2">{{buttonState[2].state}}</button>
+    <button ng-click="updateHtml()" ng-show="buttonStep == 3">{{buttonState[3].state}}</button>
+
+    <select ng-model="selectedButton" ng-show="buttonStep == 2">
+      <option ng-repeat="button in buttons">{{button.option}}</option>
+    </select>
+
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Data Retrieved from Somewhere
+      </div>
+      <div class="panel-body">
+        <div class="well well-sm">Selected :{{selectedValue}}</div>
+        <div class="well well-sm">IrrecordData: {{fromBackend}}</div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

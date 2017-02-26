@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('main', ['ionic', 'main.controllers', 'addRemote'])
+angular.module('main', ['ionic', 'main.controllers', 'addRemote', 'nodes'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -75,6 +75,16 @@ angular.module('main', ['ionic', 'main.controllers', 'addRemote'])
           'menuContent': {
             templateUrl: 'templates/scripts.html',
             controller: 'ScriptsCtrl'
+          }
+        }
+      })
+
+      .state('app.nodes', {
+        url: '/nodes',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/nodes.html',
+            controller: 'nodesCtrl'
           }
         }
       });
