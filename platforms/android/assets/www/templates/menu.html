@@ -14,21 +14,25 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">Menu</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
+        <ion-item class="item item-icon-left item-icon-right" menu-close href="#/app/home">
+          <i class="icon ion-android-home"></i> Home
+          <i class="icon ion-chevron-right"></i>
         </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
+        <ion-item class="item item-icon-left item-icon-right" menu-close href="#/app/execute">
+          <i class="icon ion-play"></i> Execute
+          <i class="icon ion-chevron-right"></i>
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
+        <ion-item class="item item-icon-left item-icon-right" menu-close href="#/app/addremote">
+          <i class="icon ion-plus-round"></i> Add Remote
+          <i class="icon ion-chevron-right"></i>
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
+        <ion-item class="item item-icon-left item-icon-right" menu-close href="#/app/scripts">
+          <i class="icon ion-edit"></i> Scripts
+          <i class="icon ion-chevron-right"></i>
         </ion-item>
       </ion-list>
     </ion-content>
