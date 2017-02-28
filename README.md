@@ -12,7 +12,7 @@
 2. Push your commits to remote branch
     - git push
     - IF you need set a remote upstream:
-        - git push set-upstream origin name_of_new_branch
+        - git push <remote-name> <branch-name>
 
 2. Once you're ready to merge back to master branch go on create a pull request
     - Option 1: go on git hub --> Go to branches --> new pull request
