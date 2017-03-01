@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('main', ['ionic', 'main.controllers', 'addRemote', 'nodes'])
+angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', 'nodes', 'discoverNode'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -86,6 +86,14 @@ angular.module('main', ['ionic', 'main.controllers', 'addRemote', 'nodes'])
             templateUrl: 'templates/nodes.html',
             controller: 'nodesCtrl'
           }
+        }
+      })
+
+      .state('app.discoverNode', {
+        url: '/discoverNode',
+        views: {
+          templateUrl: 'templates/discoverNode.html',
+          controller: 'discoverNodeCtrl'
         }
       });
     // if none of the above states are matched, use this as the fallback
