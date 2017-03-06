@@ -89,11 +89,13 @@ angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', '
         }
       })
 
-      .state('app.discoverNode', {
-        url: '/discoverNode',
+      .state('app.discovernode', {
+        url: '/discovernode',
         views: {
-          templateUrl: 'templates/discoverNode.html',
-          controller: 'discoverNodeCtrl'
+          'menuContent': {
+            templateUrl: 'templates/discovernode.html',
+            controller: 'discoverNodeCtrl'
+          }
         }
       });
     // if none of the above states are matched, use this as the fallback
