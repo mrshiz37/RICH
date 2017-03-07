@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('main', ['ionic', 'main.controllers'])
+angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', 'nodes', 'discoverNode', 'deleteRemote'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -49,12 +49,22 @@ angular.module('main', ['ionic', 'main.controllers'])
           }
         }
       })
-      .state('app.adddevice', {
-        url: '/adddevice',
+      .state('app.addremote', {
+        url: '/addremote',
         views: {
           'menuContent': {
-            templateUrl: 'templates/add_device.html',
-            // controller: 'PlaylistsCtrl'
+            templateUrl: 'templates/addRemote.html',
+            controller: 'addRemoteCtrl'
+          }
+        }
+      })
+
+      .state('app.recordremote', {
+        url: '/recordremote',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/recordRemote.html',
+            controller: 'recordRemoteCtrl'
           }
         }
       })
@@ -65,6 +75,36 @@ angular.module('main', ['ionic', 'main.controllers'])
           'menuContent': {
             templateUrl: 'templates/scripts.html',
             controller: 'ScriptsCtrl'
+          }
+        }
+      })
+
+      .state('app.nodes', {
+        url: '/nodes',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/nodes.html',
+            controller: 'nodesCtrl'
+          }
+        }
+      })
+
+      .state('app.discovernode', {
+        url: '/discovernode',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/discovernode.html',
+            controller: 'discoverNodeCtrl'
+          }
+        }
+      })
+
+      .state('app.deleteremote', {
+        url: '/deleteremote',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/deleteRemote.html',
+            controller: 'deleteRemoteCtrl'
           }
         }
       });
