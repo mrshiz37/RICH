@@ -1,0 +1,40 @@
+<ion-view view-title="Add Remote">
+    <ion-content>
+        <div class="list padding">
+            <label class="item item-input item-select padding">
+              <div class="input-label">
+                Node:
+              </div>
+              <select ng-model="formData.selectedNode" ng-options="node.custom_name for node in nodes" ng-change="getRemoteBrands()"></select>
+            </label>
+            <label class="item item-input item-select padding">
+              <div class="input-label">
+                Brand:
+              </div>
+              <select ng-model="formData.selectedBrand" ng-options="brand.brandName for brand in brands" ng-change="getRemoteModels()" ng-disabled="!formData.selectedNode"></select>
+            </label>
+            <label class="item item-input item-select padding">
+              <div class="input-label">
+                Model:
+              </div>
+              <select ng-model="formData.selectedModel" ng-options="model.modelName for model in models" ng-disabled="!formData.selectedBrand"></select>
+            </label>
+        </div>
+        <div class="padding">
+            <label class="item item-input">
+              <input type="text" placeholder="Enter a custom name..." ng-model="formData.custom_name" ng-disabled="!(formData.selectedBrand && formData.selectedModel)">
+            </label>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-positive" ng-click="addRemote()" ng-disabled="!(formData.selectedBrand && formData.selectedModel)">Add Remote</button>
+        </div>
+        <p>Don't see your remote? Click below to record your own!</p>
+        <div class="padding">
+            <button class="button button-block button-positive" ng-click="go('app.recordremote')">Record Remote</button>
+        </div>
+        <p>Need to delete a remote? Click the button below</p>
+        <div class="padding">
+            <button class="button button-block button-positive" ng-click="go('app.deleteremote')">Delete Remote</button>
+        </div>
+    </ion-content>
+</ion-view>
