@@ -7,7 +7,7 @@
     </div>
     <ion-content class="has-subheader">
         <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
-            <ion-item ng-repeat="node in nodes">
+            <ion-item ng-repeat="node in nodes" on-hold="onHold(node)">
                 Node: {{ node.custom_name }}
                 <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(node)">
                 </ion-delete-button>
