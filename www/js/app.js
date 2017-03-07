@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', 'nodes', 'discoverNode'])
+angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', 'nodes', 'discoverNode', 'deleteRemote'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -95,6 +95,16 @@ angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', '
           'menuContent': {
             templateUrl: 'templates/discovernode.html',
             controller: 'discoverNodeCtrl'
+          }
+        }
+      })
+
+      .state('app.deleteremote', {
+        url: '/deleteremote',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/deleteRemote.html',
+            controller: 'deleteRemoteCtrl'
           }
         }
       });

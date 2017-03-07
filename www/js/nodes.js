@@ -47,6 +47,14 @@ angular.module('nodes', [])
             console.log("Error");
           });
         };
+        this.writeFile = function(newNodeList) {
+          $cordovaFile.writeFile(cordova.file.dataDirectory, "nodes.json", JSON.stringify(newNodeList), true)
+              .then(function(success) {
+                  console.log("Success!");
+              }, function(error) {
+                  // error
+              });
+        };
     })
     .controller('nodesCtrl', function($scope, $state, nodeService) {
         $scope.$on('$ionicView.enter', function() {
@@ -62,6 +70,12 @@ angular.module('nodes', [])
         $scope.onItemDelete = function(node) {
             $scope.nodes.splice($scope.nodes.indexOf(node), 1);
             nodeService.removeNode(node, $scope.nodes);
+        };
+
+        $scope.onHold = function(node) {
+          var newName = prompt("Rename this node", node.custom_name);
+          $scope.nodes[$scope.nodes.indexOf(node)].custom_name = newName;
+          nodeService.writeFile($scope.nodes);
         };
 
         $scope.go = function(path) {
