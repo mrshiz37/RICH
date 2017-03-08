@@ -249,6 +249,7 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     debugCompile(project(path: "CordovaLib", configuration: "debug"))
     releaseCompile(project(path: "CordovaLib", configuration: "release"))
+    compile "com.loopj.android:android-async-http:1.4.9"
     // SUB-PROJECT DEPENDENCIES END
 }
 

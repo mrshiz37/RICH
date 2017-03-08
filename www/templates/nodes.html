@@ -1,0 +1,20 @@
+<ion-view view-title="Nodes">
+    <div class="bar bar-subheader bar-positive">
+        <div class="buttons">
+            <button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete"></button>
+        </div>
+        <h1 class="title">Node Management</h1>
+    </div>
+    <ion-content class="has-subheader">
+        <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+            <ion-item ng-repeat="node in nodes" on-hold="onHold(node)">
+                Node: {{ node.custom_name }}
+                <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(node)">
+                </ion-delete-button>
+            </ion-item>
+        </ion-list>
+        <div class="padding">
+            <button class="button button-block button-positive" ng-click="go('app.discovernode')">Discover New Node</button>
+        </div>
+    </ion-content>
+</ion-view>

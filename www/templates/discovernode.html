@@ -1,0 +1,20 @@
+<ion-view view-title="Discover Node">
+  <div class="bar bar-subheader bar-positive">
+      <h1 class="title">Discovered Nodes</h1>
+  </div>
+    <ion-content class="has-subheader">
+        <div class="list">
+            <ion-radio ng-repeat="node in formData.nodes" ng-value="node.ip_address" ng-model="formData.selectedNode">
+                {{ node.ip_address }}
+            </ion-radio>
+        </div>
+        <div class="padding">
+            <label class="item item-input">
+            <input type="text" placeholder="Enter a custom name..." ng-model="formData.custom_name" ng-disabled="!(formData.selectedNode)">
+          </label>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-positive" ng-click="addNode()" ng-disabled="!(formData.selectedNode && formData.custom_name)">Add Node</button>
+        </div>
+    </ion-content>
+</ion-view>

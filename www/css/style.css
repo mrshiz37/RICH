@@ -5,3 +5,15 @@
 .menu-open .menu-content{
 	transform: translate3d(calc(25%), 0px, 0px) !important;
 }*/
+.h1 {
+  font-size: 10px !important;
+}
+.ion-skip-backward, .icon {
+  font-size: 30px !important;
+  padding-right: 20px;
+}
+
+
+.padding {
+  padding: 10px;
+}
