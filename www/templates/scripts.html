@@ -19,5 +19,10 @@
     <ion-list>
       <button class="button button-block button-positive" ng-click="login()">Add Script</button>
     </ion-list>
+    <ion-list no-lines>
+      <ion-item ng-repeat="x in scriptData">
+        {{ x }}
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
