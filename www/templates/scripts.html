@@ -1,9 +1,23 @@
 <ion-view view-title="Scripts">
   <ion-content>
-    <ion-list>
-      <!-- <h1 ng-repeat="x in scriptData">{{x}}</h1> -->
-      <button class="button button-block button-positive" ng-click="login()">Add Script</button>
+    <!-- TODO Select node button (list) -->
+    <!-- TODO Add new script button which will lead to modal like window -->
+    <!-- TODO List of existing scripts which should have an edit and delete button for each item -->
+    <div class="list">
 
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Node
+        </div>
+        <select>
+          <option>Paul's Room</option>
+          <option selected>Living Room</option>
+          <option>Bed Room</option>
+        </select>
+      </label>
+    </div>
+    <ion-list>
+      <button class="button button-block button-positive" ng-click="login()">Add Script</button>
     </ion-list>
   </ion-content>
 </ion-view>
