@@ -1,11 +1,42 @@
 <ion-view view-title="Execute">
   <ion-content>
 
-<div>
-  <div class = "padding">
-  </div>
+<!--Search for Node-->
+    <div class="list">
 
-  <center>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Select Node
+        </div>
+        <select>
+          <option>Living Room</option>
+          <option>Angela's Room</option>
+          <option>Theatre Room</option>
+        </select>
+      </label>
+
+    </div>
+
+<!--Search for Remote-->
+<div class="list">
+
+  <label class="item item-input item-select">
+    <div class="input-label">
+      Select Remote
+    </div>
+    <select>
+      <option>Samsung DVD</option>
+      <option>LG TV</option>
+      <option>BeatBox</option>
+    </select>
+  </label>
+
+</div>
+
+
+
+
+  <center><!--Command Header-->
     <execute class = "icon ion-skip-backward"></execute>
     <execute class = "icon ion-stop"></execute>
     <execute class = "icon ion-pause"></execute>
@@ -15,6 +46,7 @@
   </center>
 </div>
 
+<!--Number Pad-->
 <div class="button-bar">
   <a class="button">1</a>
   <a class="button">2</a>
@@ -36,13 +68,36 @@
   <a class="button">#</a>
 </div>
 
-<div> <!--Volume Bar-->
-  <div class="item range">
-    <i class="icon ion-volume-low"></i>
-    <input type="range" name="volume">
-    <i class="icon ion-volume-high"></i>
+<div class="button-bar">
+  <a class="button button-positive">Volume - </a>
+  <a class="button button-positive">Volume + </a>
 </div>
 
+<div>
+  <div class = "padding">
+</div>
+
+<h4><center> Load Existing Script</center></h4>
+<!--Search for Scripts-->
+<div class="list">
+
+  <label class="item item-input item-select">
+    <div class="input-label">
+      List of scripts
+    </div>
+    <select>
+      <option>Angela's Morning Workout</option>
+      <option>Thriller Movie Script</option>
+      <option>RICH Script</option>
+    </select>
+  </label>
+
+</div>
+
+<!--Execute Loaded Script-->
+<button class="button button-full button-balanced">
+<center>  Execute Script</center>
+</button>
 
   </ion-content>
 </ion-view>
