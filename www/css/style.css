@@ -1,7 +1,19 @@
 /* Empty. Add your own CSS if you like */
-.menu.menu-left{
-	width: calc(100% - 175px) !important;
+/*.menu.menu-left{
+	width: calc(25%) !important;
 }
 .menu-open .menu-content{
-	transform: translate3d(calc(100% - 175px), 0px, 0px) !important;
+	transform: translate3d(calc(25%), 0px, 0px) !important;
+}*/
+.h1 {
+  font-size: 10px !important;
+}
+.ion-skip-backward, .icon {
+  font-size: 30px !important;
+  padding-right: 20px;
+}
+
+
+.padding {
+  padding: 10px;
 }
