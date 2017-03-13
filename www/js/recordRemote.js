@@ -1,5 +1,5 @@
 angular.module('recordRemote', [])
-    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout) {
+    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout, $state) {
         $scope.formData = {};
         $scope.formData.alternateView = false;
 
@@ -8,15 +8,12 @@ angular.module('recordRemote', [])
         });
 
         $scope.startRecording = function() {
-            $http.get('http://192.168.1.100:3000/recordRemoteBackend/startRecording', {params:{custom_name: $scope.formData.custom_name}}).success(function(data) {});
+            $http.get('http://192.168.1.100:3000/recordRemoteBackend/startRecording', {
+                params: {
+                    custom_name: $scope.formData.custom_name
+                }
+            }).success(function(data) {});
 
-            var button = {
-                button: "",
-                custom_name: $scope.formData.custom_name,
-            };
-
-            $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {});
-            $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {});
             $scope.output = "Now start pressing buttons on your remote control. " +
                 "It is very important that you press many different buttons and hold them " +
                 "down for approximately one second. Do not stop pressing buttons until this page changes";
@@ -40,7 +37,7 @@ angular.module('recordRemote', [])
         var savedReg = new RegExp("Successfully written config file*");
 
         var getData = function() {
-            $http.get('recordRemoteBackend/getRecordOutput')
+            $http.get('http://192.168.1.100:3000/recordRemoteBackend/getRecordOutput')
                 .success(function(data) {
                     console.log(data);
                     if (data === "") {
@@ -68,15 +65,14 @@ angular.module('recordRemote', [])
                         $scope.formData.savedFlag = false;
                         $scope.output = "Now press any button as fast as possible without holding the button down. " +
                             "Keep pressing the button until this screen changes";
-                    } else if (savedReg.test(data)){
+                    } else if (savedReg.test(data)) {
                         $scope.formData.buttonFlag = false;
                         $scope.formData.initFlag = false;
                         $scope.formData.remoteFlag = false;
                         $scope.formData.toggleFlag = false;
                         $scope.formData.savedFlag = true;
                         $scope.output = "Remove saved successfully. Press the button below to go back home.";
-                    }
-                    else {
+                    } else {
 
                     }
 
@@ -104,18 +100,36 @@ angular.module('recordRemote', [])
         getData();
 
         $scope.writeData = function() {
+            console.log($scope.formData.selectedButton.button);
             var button = {
-                button: ""
+                button: $scope.formData.selectedButton.button,
+                custom_name: $scope.formData.custom_name,
+                doneFlag: false
             };
-            $http.post('recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
+
+            $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
                 console.log(data);
             });
         };
 
         $scope.$on('$destroy', function() {
-            $http.get('recordRemoteBackend/quitIRRecord').success(function(data) {
+            $http.get('http://192.168.1.100:3000/recordRemoteBackend/quitIRRecord').success(function(data) {
                 console.log(data);
             });
             cancelNextLoad();
         });
+
+        $scope.go = function(path) {
+          var button = {
+              button: $scope.formData.selectedButton.button,
+              custom_name: $scope.formData.custom_name,
+              doneFlag: true
+          };
+
+          $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
+              console.log(data);
+          });
+
+          $state.go(path);
+        };
     });
