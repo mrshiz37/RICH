@@ -1,0 +1,32 @@
+<ion-view view-title="Add/Edit Scripts">
+    <ion-header-bar class="bar-subheader bar-positive">
+        <label class="item item-input">
+                    <span class="input-label">Custom Name: </span>
+                    <input type="text" placeholder="" ng-model="input.id">
+                  </label>
+    </ion-header-bar>
+    <ion-content>
+        <ion-item ng-repeat="item in items" item="item" class="item-remove-animate" ng-click="" ng-href="#/app/modifyscript">
+            Item {{ item.id }}
+            <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
+            </ion-delete-button>
+            <ion-option-button class="button-positive" ng-click="edit(item)">
+                Edit
+            </ion-option-button>
+            <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+        </ion-item>
+
+    </ion-content>
+
+    <ion-footer-bar class="bar-subfooter bar">
+        <div class="button-bar">
+            <span class="button button-positive icon-left ion-plus">Add Steps</a>
+        </div>
+    </ion-footer-bar>
+
+    <ion-footer-bar class="bar">
+        <div class="button-bar">
+            <span class="button button-positive icon-left ion-plus">Save</a>
+        </div>
+    </ion-footer-bar>
+</ion-view>
