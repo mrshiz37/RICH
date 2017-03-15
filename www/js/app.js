@@ -79,6 +79,16 @@ angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', '
         }
       })
 
+      .state('app.modifyscript', {
+        url: '/modifyscript',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/modifyScript.html',
+            controller: 'scriptsCtrl'
+          }
+        }
+      })
+
       .state('app.nodes', {
         url: '/nodes',
         views: {
