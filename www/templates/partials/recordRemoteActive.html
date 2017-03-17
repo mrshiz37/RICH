@@ -1,0 +1,21 @@
+<div class="padding" ng-if="formData.initFlag">{{output}}</div>
+
+<div class="padding" ng-if="formData.buttonFlag">
+  <div>{{output}}</div>
+  <label class="item item-input item-select padding">
+    <div class="input-label">
+      Button:
+    </div>
+    <select ng-model="formData.selectedButton" ng-options="button.button for button in buttons"></select>
+  </label>
+  <button class="button button-block button-positive" ng-click="writeData()">Record Button</button>
+</div>
+
+<div class="padding" ng-if="formData.remoteFlag">{{output}}</div>
+
+<div class="padding" ng-if="formData.toggleFlag">{{output}}</div>
+
+<div class="padding" ng-if="formData.savedFlag">
+    <div>{{output}}</div>
+    <button class="button button-block button-positive" ng-click="go('app.home')">Home</button>
+</div>
