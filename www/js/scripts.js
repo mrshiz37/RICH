@@ -1,136 +1,163 @@
 angular.module('scripts', ['nodes'])
     .factory('scriptHolder', function() {
         var script = {};
+        var node = {};
         script.getScript = function(fn) {
-          fn(script);
+            fn(script);
         };
-        script.setScript = function(newScript) {
-          script.name = newScript.name;
-          script.steps = newScript.steps;
+        script.setScript = function(newNode, newScript) {
+            script.name = newScript.name;
+            script.steps = newScript.steps;
+            node = newNode;
         };
         script.clearScript = function() {
-          script.name = "";
-          script.steps = [];
+            script.name = "";
+            script.steps = [];
+            node = {};
         };
         return script;
     })
+    .service('scriptManagement', function(nodeService) {
+        var updatedNodeList = [];
+        var nodes;
+        this.getScripts = function(fn) {
+            nodeService.getNodes(function(returnedNodes) {
+              nodes = returnedNodes;
+            });
 
+            var scripts_node1 = [{
+                    name: "script1",
+                    steps: [{
+                            remote: "a",
+                            button: "b",
+                            count: "1"
+                        },
+                        {
+                            remote: "b",
+                            button: "c",
+                            count: "2"
+                        }
+                    ]
+                },
+                {
+                    name: "script2",
+                    steps: [{
+                            remote: "c",
+                            button: "d",
+                            count: "3"
+                        },
+                        {
+                            remote: "e",
+                            button: "f",
+                            count: "4"
+                        }
+                    ]
+                }
+            ];
 
-    .controller('scriptsCtrl', function($scope, $timeout, $state, scriptHolder) {
-        $scope.formData = {};
+            var scripts_node2 = [{
+                    name: "script3",
+                    steps: [{
+                            remote: "a",
+                            button: "b",
+                            count: "1"
+                        },
+                        {
+                            remote: "b",
+                            button: "c",
+                            count: "2"
+                        }
+                    ]
+                },
+                {
+                    name: "script4",
+                    steps: [{
+                            remote: "c",
+                            button: "d",
+                            count: "3"
+                        },
+                        {
+                            remote: "e",
+                            button: "f",
+                            count: "4"
+                        }
+                    ]
+                }
+            ];
+            var newNode = {
+                custom_name: nodes[0].custom_name,
+                scripts: scripts_node1
+            };
 
-        //controls list delete
-        $scope.data = {
-            showDelete: false
+            updatedNodeList.push(newNode);
+            console.log(updatedNodeList);
+
+            newNode = {
+                custom_name: nodes[1].custom_name,
+                scripts: scripts_node2
+            };
+
+            updatedNodeList.push(newNode);
+            console.log(updatedNodeList);
+
+            fn(updatedNodeList);
         };
 
-        //controls edit alert
-        $scope.edit = function(item) {
-            alert('Edit Item: ' + item.id);
-        };
-
-        //this can be used for reordering
-        //   $scope.moveItem = function(item, fromIndex, toIndex) {
-        //     $scope.items.splice(fromIndex, 1);
-        //     $scope.items.splice(toIndex, 0, item);
-        //   };
-
-        //deleting things from a list
-        $scope.onItemDelete = function(item) {
-            $scope.items.splice($scope.items.indexOf(item), 1);
-        };
-
-        //dummy data
-
-        $scope.formData.nodes = [{
-                custom_name: "living room",
-                ip_address: "192.168.1.100",
-                scripts: [{
-                        name: "script1",
-                        steps: [{
-                                remote: "a",
-                                button: "b",
-                                count: "1"
-                            },
-                            {
-                                remote: "b",
-                                button: "c",
-                                count: "2"
-                            }
-                        ]
-                    },
-                    {
-                        name: "script2",
-                        steps: [{
-                                remote: "c",
-                                button: "d",
-                                count: "3"
-                            },
-                            {
-                                remote: "e",
-                                button: "f",
-                                count: "4"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                custom_name: "bathroom",
-                ip_address: "192.168.1.100",
-                scripts: [{
-                        name: "script3",
-                        steps: [{
-                                remote: "a",
-                                button: "b",
-                                count: "1"
-                            },
-                            {
-                                remote: "b",
-                                button: "c",
-                                count: "2"
-                            }
-                        ]
-                    },
-                    {
-                        name: "script4",
-                        steps: [{
-                                remote: "c",
-                                button: "d",
-                                count: "3"
-                            },
-                            {
-                                remote: "e",
-                                button: "f",
-                                count: "4"
-                            }
-                        ]
-                    }
-                ]
+        this.updateScriptName = function(oldName, newName) {
+          for(var i = 0; i < updatedNodeList.length; i++) {
+            if(updatedNodeList[i].custom_name === oldName) {
+              updatedNodeList[i].custom_name = newName;
             }
-        ];
-
-        //refreshing page --may or may not need this--
-        $scope.doRefresh = function() {
-            console.log('Refreshing!');
-            $timeout(function() {
-                //simulate async response
-                $scope.items.push({
-                    id: Math.floor(Math.random() * 1000) + 4
-                });
-                //Stop the ion-refresher from spinning
-                $scope.$broadcast('scroll.refreshComplete');
-            }, 1000);
+          }
+          console.log(updatedNodeList);
         };
 
-        //function that allows has the selected data transfer to next page
-        $scope.gotomodifyScript = function(item) {
-            scriptHolder.setScript(item);
-            $state.go('app.modifyScript');
+        this.updateScript = function(node, script) {
+          for(var i = 0; i < updatedNodeList.length; i++) {
+            if(updatedNodeList[i].custom_name === node.custom_name) {
+              for(var j = 0; j < updatedNodeList[i].scripts.length; j++) {
+                if(updatedNodeList[i].scripts[j].name === script.name) {
+                  updatedNodeList[i].scripts[j] = script;
+                }
+              }
+            }
+          }
+          console.log(updatedNodeList);
         };
+    })
 
-        $scope.createNewItem = function() {
-          scriptHolder.clearScript();
-          $state.go('app.modifyScript');
-        }
+
+.controller('scriptsCtrl', function($scope, $timeout, $state, scriptHolder, scriptManagement) {
+    $scope.formData = {};
+
+    //controls list delete
+    $scope.data = {
+        showDelete: false
+    };
+
+    //controls edit alert
+    $scope.edit = function(item) {
+        alert('Edit Item: ' + item.id);
+    };
+
+    //deleting things from a list
+    $scope.onItemDelete = function(item) {
+        $scope.items.splice($scope.items.indexOf(item), 1);
+    };
+
+    //dummy data
+    scriptManagement.getScripts(function(nodeList) {
+      $scope.formData.nodes = nodeList;
     });
+
+    //function that allows has the selected data transfer to next page
+    $scope.gotomodifyScript = function(node, item) {
+        scriptHolder.setScript(node, item);
+        $state.go('app.modifyScript');
+    };
+
+    $scope.createNewItem = function() {
+        scriptHolder.clearScript();
+        $state.go('app.modifyScript');
+    };
+});

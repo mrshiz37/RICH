@@ -1,20 +1,34 @@
-angular.module('modifyScript', ['scripts'])
-    .controller('modifyScriptCtrl', function($scope, $timeout, $state, $ionicModal, $ionicPopup, scriptHolder) {
+angular.module('modifyScript', ['scripts', 'nodes'])
+    .controller('modifyScriptCtrl', function($scope, $timeout, $state, $ionicModal, $ionicPopup, $ionicHistory, scriptHolder, nodeService, scriptManagement) {
         $scope.$on('$ionicView.enter', function() {
             $scope.formData = {};
+
             scriptHolder.getScript(function(script) {
                 $scope.formData.script = script;
-                console.log($scope.formData.script.steps);
+
                 if ($scope.formData.script.name === "") {
-                    $ionicPopup.prompt({
-                            title: 'Enter Script Name',
-                            template: 'Enter new script name:',
-                            inputType: 'text',
-                            inputPlaceholder: 'Script Name'
-                        })
-                        .then(function(res) {
-                            $scope.formData.script.name = res;
-                        });
+                  nodeService.getNodes(function(returnedNodes) {
+                    $scope.formData.nodes = returnedNodes;
+                    console.log($scope.formData.nodes);
+                  });
+                  $ionicPopup.show({
+                      templateUrl: 'templates/partials/scriptsPopup.html',
+                      title: 'New Script',
+                      scope: $scope,
+                      buttons: [{
+                              text: 'Cancel'
+                          },
+                          {
+                              text: '<b>Save</b>',
+                              type: 'button-positive',
+                              onTap: function(e) {
+                                  if($scope.formData.script.name === "") {
+                                    e.preventDefault();
+                                  }
+                              }
+                          }
+                      ]
+                  });
                 }
             });
             $scope.formData.count = 1;
@@ -179,6 +193,19 @@ angular.module('modifyScript', ['scripts'])
         $scope.onItemDelete = function(step) {
             $scope.formData.script.steps.splice($scope.formData.script.steps.indexOf(step), 1);
             console.log($scope.formData.script.steps);
+        };
+
+        $scope.save = function() {
+          var script = {
+            name: $scope.formData.script.name,
+            steps: $scope.formData.script.steps
+          };
+
+          var node = $scope.formData.selectedNode;
+
+          scriptManagement.updateScript(node, script, function() {
+            $ionicHistory.goBack();
+          });
         };
 
         $scope.$on('$destroy', function() {
