@@ -68,7 +68,7 @@ angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', '
           }
         }
       })
-      
+
 
       .state('app.scripts', {
         url: '/scripts',

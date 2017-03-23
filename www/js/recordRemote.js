@@ -1,5 +1,5 @@
 angular.module('recordRemote', [])
-    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout, $state) {
+    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout, $state, $ionicHistory) {
         $scope.formData = {};
         $scope.formData.alternateView = false;
 
@@ -85,7 +85,6 @@ angular.module('recordRemote', [])
                 });
         };
 
-
         var cancelNextLoad = function() {
             $timeout.cancel(loadPromise);
         };
@@ -94,7 +93,7 @@ angular.module('recordRemote', [])
             mill = mill || loadTime;
             //Always make sure the last timeout is cleared before starting a new one
             cancelNextLoad();
-            $timeout(getData, mill);
+            loadPromise = $timeout(getData, mill);
         };
 
         getData();
@@ -110,26 +109,26 @@ angular.module('recordRemote', [])
             $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
                 console.log(data);
             });
+
+            $scope.formData.selectedButton.button = "";
         };
 
-        $scope.$on('$destroy', function() {
-            $http.get('http://192.168.1.100:3000/recordRemoteBackend/quitIRRecord').success(function(data) {
-                console.log(data);
-            });
-            cancelNextLoad();
+        $scope.$on("$destroy", function(event, data) {
+            $http.get('http://192.168.1.100:3000/recordRemoteBackend/quitIRRecord').success(function(data) {});
+            $timeout.cancel(loadPromise);
         });
 
         $scope.go = function(path) {
-          var button = {
-              button: $scope.formData.selectedButton.button,
-              custom_name: $scope.formData.custom_name,
-              doneFlag: true
-          };
+            var button = {
+                button: $scope.formData.selectedButton.button,
+                custom_name: $scope.formData.custom_name,
+                doneFlag: true
+            };
 
-          $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
-              console.log(data);
-          });
+            $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
+                console.log(data);
+            });
 
-          $state.go(path);
+            $ionicHistory.goBack();
         };
     });
