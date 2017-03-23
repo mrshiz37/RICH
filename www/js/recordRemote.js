@@ -109,7 +109,6 @@ angular.module('recordRemote', [])
             $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
                 console.log(data);
             });
-
             $scope.formData.selectedButton.button = "";
         };
 
