@@ -160,11 +160,6 @@ angular.module('scripts', ['nodes'])
             });
         };
 
-        //controls edit alert
-        $scope.edit = function(item) {
-            alert('Edit Item: ' + item.id);
-        };
-
         //deleting things from a list
         $scope.onItemDelete = function(item) {
             $scope.items.splice($scope.items.indexOf(item), 1);

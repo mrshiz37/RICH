@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', 'nodes', 'discoverNode', 'deleteRemote', 'scripts','recordRemote', 'modifyScript'])
+angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', 'nodes', 'discoverNode', 'deleteRemote', 'scripts','recordRemote', 'modifyScript', 'execute'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -44,7 +44,8 @@ angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', '
         url: '/execute',
         views: {
           'menuContent': {
-            templateUrl: 'templates/execute.html'
+            templateUrl: 'templates/execute.html',
+            controller: 'executeCtrl'
           }
         }
       })
