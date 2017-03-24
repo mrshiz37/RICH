@@ -2,16 +2,15 @@ angular.module('modifyScript', ['scripts', 'nodes'])
     .controller('modifyScriptCtrl', function($scope, $timeout, $state, $ionicModal, $ionicPopup, $ionicHistory, scriptHolder, nodeService, scriptManagement) {
         $scope.$on('$ionicView.enter', function() {
             $scope.formData = {};
-
-            scriptHolder.getScript(function(script) {
+            $scope.updateFlag = true;
+            scriptHolder.getScript(function(script, node) {
                 $scope.formData.script = script;
-
+                $scope.formData.node = node;
                 if ($scope.formData.script.name === "") {
                   nodeService.getNodes(function(returnedNodes) {
                     $scope.formData.nodes = returnedNodes;
-                    console.log($scope.formData.nodes);
                   });
-                  $ionicPopup.show({
+                  var newScriptPopup = $ionicPopup.show({
                       templateUrl: 'templates/partials/scriptsPopup.html',
                       title: 'New Script',
                       scope: $scope,
@@ -25,9 +24,16 @@ angular.module('modifyScript', ['scripts', 'nodes'])
                                   if($scope.formData.script.name === "") {
                                     e.preventDefault();
                                   }
+                                  else {
+                                    return $scope.formData.selectedNode;
+                                  }
                               }
                           }
                       ]
+                  });
+                  newScriptPopup.then(function(res) {
+                    $scope.formData.node = res;
+                    $scope.updateFlag = false;
                   });
                 }
             });
@@ -162,7 +168,7 @@ angular.module('modifyScript', ['scripts', 'nodes'])
         $scope.onHold = function(step) {
             $scope.formData.count = step.count;
             var myPopup = $ionicPopup.show({
-                templateUrl: 'templates/partials/scriptsPopup.html',
+                templateUrl: 'templates/partials/countPopup.html',
                 title: 'Edit Count',
                 scope: $scope,
                 buttons: [{
@@ -201,9 +207,9 @@ angular.module('modifyScript', ['scripts', 'nodes'])
             steps: $scope.formData.script.steps
           };
 
-          var node = $scope.formData.selectedNode;
+          var node = $scope.formData.node;
 
-          scriptManagement.updateScript(node, script, function() {
+          scriptManagement.updateScript(node, script, $scope.updateFlag, function() {
             $ionicHistory.goBack();
           });
         };

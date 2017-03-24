@@ -3,7 +3,7 @@ angular.module('scripts', ['nodes'])
         var script = {};
         var node = {};
         script.getScript = function(fn) {
-            fn(script);
+            fn(script, node);
         };
         script.setScript = function(newNode, newScript) {
             script.name = newScript.name;
@@ -22,7 +22,7 @@ angular.module('scripts', ['nodes'])
         var nodes;
         this.getScripts = function(fn) {
             nodeService.getNodes(function(returnedNodes) {
-              nodes = returnedNodes;
+                nodes = returnedNodes;
             });
 
             var scripts_node1 = [{
@@ -103,61 +103,86 @@ angular.module('scripts', ['nodes'])
             fn(updatedNodeList);
         };
 
-        this.updateScriptName = function(oldName, newName) {
-          for(var i = 0; i < updatedNodeList.length; i++) {
-            if(updatedNodeList[i].custom_name === oldName) {
-              updatedNodeList[i].custom_name = newName;
+        this.updateScriptName = function(oldName, newName, node) {
+            for (var i = 0; i < updatedNodeList.length; i++) {
+                if (updatedNodeList[i].custom_name === node.custom_name) {
+                    for(var j = 0; j < updatedNodeList[i].scripts.length; j++) {
+                      if(updatedNodeList[i].scripts[j].name === oldName) {
+                        updatedNodeList[i].scripts[j].name = newName;
+                      }
+                    }
+                }
             }
-          }
-          console.log(updatedNodeList);
+            console.log(updatedNodeList);
         };
 
-        this.updateScript = function(node, script) {
-          for(var i = 0; i < updatedNodeList.length; i++) {
-            if(updatedNodeList[i].custom_name === node.custom_name) {
-              for(var j = 0; j < updatedNodeList[i].scripts.length; j++) {
-                if(updatedNodeList[i].scripts[j].name === script.name) {
-                  updatedNodeList[i].scripts[j] = script;
+        this.updateScript = function(node, script, updateFlag, fn) {
+            console.log(node);
+            if (updateFlag) {
+                for (var i = 0; i < updatedNodeList.length; i++) {
+                    if (updatedNodeList[i].custom_name === node.custom_name) {
+                        for (var j = 0; j < updatedNodeList[i].scripts.length; j++) {
+                            if (updatedNodeList[i].scripts[j].name === script.name) {
+                                updatedNodeList[i].scripts[j] = script;
+                            }
+                        }
+                    }
                 }
-              }
+            } else {
+                for (var i = 0; i < updatedNodeList.length; i++) {
+                    if (updatedNodeList[i].custom_name === node.custom_name) {
+                        updatedNodeList[i].scripts.push(script);
+                    }
+                }
             }
-          }
-          console.log(updatedNodeList);
+            fn();
+            console.log(updatedNodeList);
         };
     })
 
 
-.controller('scriptsCtrl', function($scope, $timeout, $state, scriptHolder, scriptManagement) {
-    $scope.formData = {};
+    .controller('scriptsCtrl', function($scope, $timeout, $state, $ionicPopup, scriptHolder, scriptManagement) {
+        $scope.formData = {};
 
-    //controls list delete
-    $scope.data = {
-        showDelete: false
-    };
+        //controls list delete
+        $scope.data = {
+            showDelete: false
+        };
 
-    //controls edit alert
-    $scope.edit = function(item) {
-        alert('Edit Item: ' + item.id);
-    };
+        $scope.onHold = function(script, node) {
+            $ionicPopup.prompt({
+                title: 'Change Script Name',
+                template: 'Enter a new script name',
+                inputType: 'text',
+                inputPlaceholder: script.name
+            }).then(function(res) {
+                scriptManagement.updateScriptName(script.name, res, node);
+            });
+        };
 
-    //deleting things from a list
-    $scope.onItemDelete = function(item) {
-        $scope.items.splice($scope.items.indexOf(item), 1);
-    };
+        //controls edit alert
+        $scope.edit = function(item) {
+            alert('Edit Item: ' + item.id);
+        };
 
-    //dummy data
-    scriptManagement.getScripts(function(nodeList) {
-      $scope.formData.nodes = nodeList;
+        //deleting things from a list
+        $scope.onItemDelete = function(item) {
+            $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+
+        //dummy data
+        scriptManagement.getScripts(function(nodeList) {
+            $scope.formData.nodes = nodeList;
+        });
+
+        //function that allows has the selected data transfer to next page
+        $scope.gotomodifyScript = function(node, item) {
+            scriptHolder.setScript(node, item);
+            $state.go('app.modifyScript');
+        };
+
+        $scope.createNewItem = function() {
+            scriptHolder.clearScript();
+            $state.go('app.modifyScript');
+        };
     });
-
-    //function that allows has the selected data transfer to next page
-    $scope.gotomodifyScript = function(node, item) {
-        scriptHolder.setScript(node, item);
-        $state.go('app.modifyScript');
-    };
-
-    $scope.createNewItem = function() {
-        scriptHolder.clearScript();
-        $state.go('app.modifyScript');
-    };
-});
