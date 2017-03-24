@@ -44,95 +44,9 @@ angular.module('modifyScript', ['scripts', 'nodes'])
             showDelete: false
         };
 
-        $scope.remotes = [{
-                "brand": "a",
-                "model": "a",
-                "custom_name": "a",
-                "buttons": [{
-                    "button": "KEY_POWER"
-                }, {
-                    "button": "KEY_BACK"
-                }, {
-                    "button": "KEY_MENU"
-                }, {
-                    "button": "KEY_LEFT"
-                }, {
-                    "button": "KEY_RIGHT"
-                }, {
-                    "button": "KEY_UP"
-                }, {
-                    "button": "KEY_DOWN"
-                }, {
-                    "button": "KEY_OK"
-                }, {
-                    "button": "KEY_F11"
-                }, {
-                    "button": "KEY_SEARCH"
-                }, {
-                    "button": "KEY_GREEN"
-                }, {
-                    "button": "KEY_BLUE"
-                }, {
-                    "button": "KEY_YELLOW"
-                }, {
-                    "button": "KEY_ORANGE"
-                }, {
-                    "button": "KEY_PURPLE"
-                }, {
-                    "button": "KEY_PLAY"
-                }, {
-                    "button": "KEY_VOLUMEUP"
-                }, {
-                    "button": "KEY_VOLUMEDOWN"
-                }, {
-                    "button": "KEY_HOME"
-                }]
-            },
-            {
-                "brand": "b",
-                "model": "c",
-                "custom_name": "c",
-                "buttons": [{
-                    "button": "KEY_POWER"
-                }, {
-                    "button": "KEY_BACK"
-                }, {
-                    "button": "KEY_MENU"
-                }, {
-                    "button": "KEY_LEFT"
-                }, {
-                    "button": "KEY_RIGHT"
-                }, {
-                    "button": "KEY_UP"
-                }, {
-                    "button": "KEY_DOWN"
-                }, {
-                    "button": "KEY_OK"
-                }, {
-                    "button": "KEY_F11"
-                }, {
-                    "button": "KEY_SEARCH"
-                }, {
-                    "button": "KEY_GREEN"
-                }, {
-                    "button": "KEY_BLUE"
-                }, {
-                    "button": "KEY_YELLOW"
-                }, {
-                    "button": "KEY_ORANGE"
-                }, {
-                    "button": "KEY_PURPLE"
-                }, {
-                    "button": "KEY_PLAY"
-                }, {
-                    "button": "KEY_VOLUMEUP"
-                }, {
-                    "button": "KEY_VOLUMEDOWN"
-                }, {
-                    "button": "KEY_HOME"
-                }]
-            }
-        ];
+        $http.get('http://' + node.ip_address + ':3000/editScriptsBackend/getRemotes').success(function(data) {
+          $scope.remotes = data;
+        });
 
         $ionicModal.fromTemplateUrl('templates/scriptModal.html', {
             scope: $scope

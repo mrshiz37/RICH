@@ -16,7 +16,8 @@
         <div class="item item-divider">
           {{node.custom_name}}
         </div>
-        <ion-item ng-repeat="script in node.scripts" item="script" ng-click="gotomodifyScript(node, script)" on-hold="onHold(script, node)">{{script.name}}</ion-item>
+        <ion-item ng-repeat="script in node.scripts" item="script" ng-click="gotomodifyScript(node, script)" on-hold="onHold(script, node)">{{script.name}}
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(node, script)"></ion-delete-button></ion-item>
       </div>
   </ion-content>
 </ion-view>

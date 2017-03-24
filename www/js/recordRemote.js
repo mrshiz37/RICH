@@ -1,14 +1,43 @@
-angular.module('recordRemote', [])
-    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout, $state, $ionicHistory) {
+angular.module('recordRemote', ['nodes'])
+    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout, $state, $ionicHistory, nodeService) {
         $scope.formData = {};
         $scope.formData.alternateView = false;
+        nodeService.getNodes(function(nodes) {
+            $scope.formData.nodes = nodes;
+        });
 
-        $http.get('http://192.168.1.100:3000/recordRemoteBackend/getRemoteButtons').success(function(data) {
+        $scope.$on('$ionicView.enter', function() {
+            var newScriptPopup = $ionicPopup.show({
+                templateUrl: 'templates/partials/recordRemotePopup.html',
+                title: 'New Remote',
+                scope: $scope,
+                buttons: [{
+                        text: 'Cancel'
+                    },
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.formData.selectedPopupNode) {
+                                e.preventDefault();
+                            } else {
+                                return $scope.formData.selectedPopupNode;
+                            }
+                        }
+                    }
+                ]
+            });
+            newScriptPopup.then(function(res) {
+                $scope.formData.node = res;
+            });
+        });
+
+        $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/getRemoteButtons').success(function(data) {
             $scope.buttons = data;
         });
 
         $scope.startRecording = function() {
-            $http.get('http://192.168.1.100:3000/recordRemoteBackend/startRecording', {
+            $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/startRecording', {
                 params: {
                     custom_name: $scope.formData.custom_name
                 }
@@ -37,7 +66,7 @@ angular.module('recordRemote', [])
         var savedReg = new RegExp("Successfully written config file*");
 
         var getData = function() {
-            $http.get('http://192.168.1.100:3000/recordRemoteBackend/getRecordOutput')
+            $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/getRecordOutput')
                 .success(function(data) {
                     console.log(data);
                     if (data === "") {
@@ -106,14 +135,14 @@ angular.module('recordRemote', [])
                 doneFlag: false
             };
 
-            $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
+            $http.post('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
                 console.log(data);
             });
             $scope.formData.selectedButton.button = "";
         };
 
         $scope.$on("$destroy", function(event, data) {
-            $http.get('http://192.168.1.100:3000/recordRemoteBackend/quitIRRecord').success(function(data) {});
+            $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/quitIRRecord').success(function(data) {});
             $timeout.cancel(loadPromise);
         });
 
@@ -124,7 +153,7 @@ angular.module('recordRemote', [])
                 doneFlag: true
             };
 
-            $http.post('http://192.168.1.100:3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
+            $http.post('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
                 console.log(data);
             });
 

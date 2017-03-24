@@ -1,32 +1,21 @@
 angular.module('addRemote', ['nodes'])
     .controller('addRemoteCtrl', function($scope, $http, $state, nodeService) {
-        /*nodeService.getNodes(function(nodes) {
+        nodeService.getNodes(function(nodes) {
             $scope.nodes = nodes;
-        });*/
+        });
 
         $scope.formData = {};
         $scope.custom_name = "";
         $scope.getRemoteBrands = function() {
-            /*$scope.brands = [ { brandName: 'a' },
-                              { brandName: 'b' },
-                              { brandName: 'c' },
-                              { brandName: 'custom' } ];*/
             $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteBrands').success(function(data) {
                 $scope.brands = data;
             });
         };
 
         $scope.getRemoteModels = function() {
-            $scope.models = [{
-                    modelName: 'aa'
-                },
-                {
-                    modelName: 'bb'
-                },
-                {
-                    modelName: 'cc'
-                }
-            ];
+          $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteFiles', {params:{custom_name: $scope.formData.selectedBrand}}).success(function(data) {
+              $scope.brands = data;
+          });
         };
 
         $scope.addRemote = function() {
@@ -36,7 +25,9 @@ angular.module('addRemote', ['nodes'])
                 model: $scope.formData.selectedModel.modelName,
                 custom_name: $scope.formData.custom_name
             };
-            console.log(remote);
+            $http.put('/addRemoteBackend/putNewRemote', JSON.stringify(remote)).success(function(data) {
+              console.log(data);
+            });
         };
 
         $scope.go = function(path) {

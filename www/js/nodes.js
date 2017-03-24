@@ -2,7 +2,7 @@ angular.module('nodes', [])
     .service('nodeService', function($cordovaFile) {
         var nodes = [];
         this.getNodes = function(fn) {
-            /*$cordovaFile.checkFile(cordova.file.dataDirectory, "nodes.json")
+            $cordovaFile.checkFile(cordova.file.dataDirectory, "nodes.json")
                 .then(function(success) {}, function(error) {
                     $cordovaFile.createFile(cordova.file.dataDirectory, "nodes.json", true)
                         .then(function(success) {}, function(error) {});
@@ -14,18 +14,7 @@ angular.module('nodes', [])
                     fn(nodes);
                 }, function(error) {
                     console.log(error);
-                });*/
-
-            nodes = [{
-                    custom_name: "Node1",
-                    ip_address: "192.168.1.100"
-                },
-                {
-                    custom_name: "node2",
-                    ip_address: "192.168.1.101"
-                }
-            ];
-            fn(nodes);
+                });
         };
         this.addNode = function(node, fn) {
             nodes.push(node);
