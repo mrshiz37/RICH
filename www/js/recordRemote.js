@@ -1,5 +1,5 @@
 angular.module('recordRemote', ['nodes'])
-    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout, $state, $ionicHistory, nodeService) {
+    .controller('recordRemoteCtrl', function($scope, $http, $location, $timeout, $state, $ionicHistory, $ionicPopup, nodeService) {
         $scope.formData = {};
         $scope.formData.alternateView = false;
         nodeService.getNodes(function(nodes) {
@@ -29,11 +29,11 @@ angular.module('recordRemote', ['nodes'])
             });
             newScriptPopup.then(function(res) {
                 $scope.formData.node = res;
+                $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/getRemoteButtons').success(function(data) {
+                    $scope.buttons = data;
+                });
+                getData();
             });
-        });
-
-        $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/getRemoteButtons').success(function(data) {
-            $scope.buttons = data;
         });
 
         $scope.startRecording = function() {
@@ -125,8 +125,6 @@ angular.module('recordRemote', ['nodes'])
             loadPromise = $timeout(getData, mill);
         };
 
-        getData();
-
         $scope.writeData = function() {
             console.log($scope.formData.selectedButton.button);
             var button = {
@@ -142,8 +140,15 @@ angular.module('recordRemote', ['nodes'])
         };
 
         $scope.$on("$destroy", function(event, data) {
-            $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/quitIRRecord').success(function(data) {});
+            $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/quitIRRecord').success(function(data) {
+              $timeout.cancel(loadPromise);
+            });
+        });
+
+        $scope.$on("$ionicView.beforeLeave", function(event, data) {
+          $http.get('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/quitIRRecord').success(function(data) {
             $timeout.cancel(loadPromise);
+          });
         });
 
         $scope.go = function(path) {

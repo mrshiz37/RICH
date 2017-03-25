@@ -1,0 +1,25 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Add Step</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-input item-select">
+              <span class="input-label">Remote:</span>
+              <select ng-model="formData.selectedRemote" ng-options="remote.custom_name for remote in remotes"></select>
+            </label>
+            <label class="item item-input item-select">
+              <span class="input-label">Button:</span>
+              <select ng-model="formData.selectedButton" ng-options="button.button for button in formData.selectedRemote.buttons" ng-disabled="!formData.selectedRemote"></select>
+            </label>
+              <span class="input-label">Count:</span>
+              <div class="button-bar">
+                <a class="button button-icon icon ion-minus-round" ng-click="decrease()"></a>
+                <a>{{formData.count}}</a>
+                <a class="button button-icon icon ion-plus-round" ng-click="increase()"></a>
+            </div>
+            <button class="button button-full button-positive" ng-click="addStep()">Add Step</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

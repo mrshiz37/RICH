@@ -17,16 +17,18 @@ angular.module('scripts', ['nodes'])
         };
         return script;
     })
-    .service('scriptManagement', function(nodeService) {
+    .service('scriptManagement', function($http, nodeService) {
         var updatedNodeList = [];
         var nodes;
         this.getScripts = function(fn) {
             nodeService.getNodes(function(returnedNodes) {
                 nodes = returnedNodes;
+                console.log(nodes);
                 for (var i = 0; i < nodes.length; i++) {
+                  var custom_name = nodes[i].custom_name;
                     $http.get('http://' + nodes[i].ip_address + ':3000/editScriptsBackend/getScripts').success(function(data) {
                         var newNode = {
-                            custom_name: nodes[i].custom_name,
+                            custom_name: custom_name,
                             scripts: data
                         };
                         updatedNodeList.push(newNode);

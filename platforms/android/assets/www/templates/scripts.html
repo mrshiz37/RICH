@@ -1,9 +1,23 @@
 <ion-view view-title="Scripts">
-  <ion-content>
-    <ion-list>
-      <!-- <h1 ng-repeat="x in scriptData">{{x}}</h1> -->
-      <button class="button button-block button-positive" ng-click="login()">Add Script</button>
-
-    </ion-list>
+  <div class="bar bar-subheader bar-positive">
+      <div class="buttons">
+          <button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete"></button>
+      </div>
+      <h1 class="title">List of Scripts</h1>
+      <div class="buttons">
+          <a class="button button-balanced" ng-click="createNewItem()">
+                Add new script
+            </a>
+      </div>
+  </div>
+  <ion-content class="has-subheader">
+    <ion-list show-delete="data.showDelete">
+      <div ng-repeat="node in formData.nodes">
+        <div class="item item-divider">
+          {{node.custom_name}}
+        </div>
+        <ion-item ng-repeat="script in node.scripts" item="script" ng-click="gotomodifyScript(node, script)" on-hold="onHold(script, node)">{{script.name}}
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(node, script)"></ion-delete-button></ion-item>
+      </div>
   </ion-content>
 </ion-view>

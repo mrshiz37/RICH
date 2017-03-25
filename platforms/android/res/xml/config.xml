@@ -29,10 +29,10 @@
     <allow-navigation href="cdvfile:*" />
     <name>RICH</name>
     <description>
-        An Ionic Framework and Cordova project.
+    A mobile application to communicate with our custom made node to send IR signal to a device
     </description>
-    <author email="you@example.com" href="http://example.com/">
-      Your Name Here
+    <author>
+      Paul Dao, Jacob Klitzke, Angela Vuong, Son Phan
     </author>
     <content src="index.html" />
     <access origin="*" />

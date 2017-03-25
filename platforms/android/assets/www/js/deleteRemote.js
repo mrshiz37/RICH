@@ -1,8 +1,12 @@
 angular.module('deleteRemote', ['nodes'])
-    .controller('deleteRemoteCtrl', function($scope, $http, $state, nodeService) {
+    .controller('deleteRemoteCtrl', function($scope, $http, $state, $ionicHistory, nodeService) {
         $scope.formData = {};
-        nodeService.getNodes(function(nodes) {
-            $scope.nodes = nodes;
+
+        $scope.$on('$ionicView.enter', function() {
+          nodeService.getNodes(function(nodes) {
+              $scope.nodes = nodes;
+          });
+          $scope.remotes = null;
         });
 
         $scope.getRemotes = function() {
@@ -18,6 +22,10 @@ angular.module('deleteRemote', ['nodes'])
                 }
             }).success(function(data) {
                 console.log(data);
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $state.go('app.home');
             });
         };
     });
