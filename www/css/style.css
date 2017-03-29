@@ -18,6 +18,10 @@
 }
 
 .custom-dark{
-   color : #30393A !important; // text
-   background-color:blue!important; // for bg color
+   color : #30393A !important;
+   background-color:blue !important;
 }
+
+/*.bar-subheader {
+  height: auto !important;
+}*/

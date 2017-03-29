@@ -1,32 +1,164 @@
 angular.module('scripts', ['nodes'])
-    .factory('Authorization', function() {
+    .factory('scriptHolder', function() {
+        var script = {};
+        var node = {};
+        script.getScript = function(fn) {
+            fn(script, node);
+        };
+        script.setScript = function(newNode, newScript) {
+            script.name = newScript.name;
+            script.steps = newScript.steps;
+            node = newNode;
+        };
+        script.clearScript = function() {
+            script.name = "";
+            script.steps = [];
+            node = {};
+        };
+        return script;
+    })
+    .service('scriptManagement', function(nodeService) {
+        var updatedNodeList = [];
+        var nodes;
+        this.getScripts = function(fn) {
+            nodeService.getNodes(function(returnedNodes) {
+                nodes = returnedNodes;
+            });
 
-        authorization = {};
-        authorization.id = "";
-        return authorization;
+            var scripts_node1 = [{
+                    name: "script1",
+                    steps: [{
+                            remote: "a",
+                            button: "b",
+                            count: "1"
+                        },
+                        {
+                            remote: "b",
+                            button: "c",
+                            count: "2"
+                        }
+                    ]
+                },
+                {
+                    name: "script2",
+                    steps: [{
+                            remote: "c",
+                            button: "d",
+                            count: "3"
+                        },
+                        {
+                            remote: "e",
+                            button: "f",
+                            count: "4"
+                        }
+                    ]
+                }
+            ];
+
+            var scripts_node2 = [{
+                    name: "script3",
+                    steps: [{
+                            remote: "a",
+                            button: "b",
+                            count: "1"
+                        },
+                        {
+                            remote: "b",
+                            button: "c",
+                            count: "2"
+                        }
+                    ]
+                },
+                {
+                    name: "script4",
+                    steps: [{
+                            remote: "c",
+                            button: "d",
+                            count: "3"
+                        },
+                        {
+                            remote: "e",
+                            button: "f",
+                            count: "4"
+                        }
+                    ]
+                }
+            ];
+            var newNode = {
+                custom_name: nodes[0].custom_name,
+                scripts: scripts_node1
+            };
+
+            updatedNodeList.push(newNode);
+            console.log(updatedNodeList);
+
+            newNode = {
+                custom_name: nodes[1].custom_name,
+                scripts: scripts_node2
+            };
+
+            updatedNodeList.push(newNode);
+            console.log(updatedNodeList);
+
+            fn(updatedNodeList);
+        };
+
+        this.updateScriptName = function(oldName, newName, node) {
+            for (var i = 0; i < updatedNodeList.length; i++) {
+                if (updatedNodeList[i].custom_name === node.custom_name) {
+                    for(var j = 0; j < updatedNodeList[i].scripts.length; j++) {
+                      if(updatedNodeList[i].scripts[j].name === oldName) {
+                        updatedNodeList[i].scripts[j].name = newName;
+                      }
+                    }
+                }
+            }
+            console.log(updatedNodeList);
+        };
+
+        this.updateScript = function(node, script, updateFlag, fn) {
+            console.log(node);
+            if (updateFlag) {
+                for (var i = 0; i < updatedNodeList.length; i++) {
+                    if (updatedNodeList[i].custom_name === node.custom_name) {
+                        for (var j = 0; j < updatedNodeList[i].scripts.length; j++) {
+                            if (updatedNodeList[i].scripts[j].name === script.name) {
+                                updatedNodeList[i].scripts[j] = script;
+                            }
+                        }
+                    }
+                }
+            } else {
+                for (var i = 0; i < updatedNodeList.length; i++) {
+                    if (updatedNodeList[i].custom_name === node.custom_name) {
+                        updatedNodeList[i].scripts.push(script);
+                    }
+                }
+            }
+            fn();
+            console.log(updatedNodeList);
+        };
     })
 
 
-    .controller('scriptsCtrl', function($scope, $timeout, $ionicModal, Authorization) {
-
-        //holds data for second page
-        $scope.input = Authorization;
+    .controller('scriptsCtrl', function($scope, $timeout, $state, $ionicPopup, scriptHolder, scriptManagement) {
+        $scope.formData = {};
 
         //controls list delete
         $scope.data = {
             showDelete: false
         };
 
-        //controls edit alert
-        $scope.edit = function(item) {
-            alert('Edit Item: ' + item.id);
+        $scope.onHold = function(script, node) {
+            $ionicPopup.prompt({
+                title: 'Change Script Name',
+                template: 'Enter a new script name',
+                inputType: 'text',
+                inputPlaceholder: script.name
+            }).then(function(res) {
+                scriptManagement.updateScriptName(script.name, res, node);
+            });
         };
-
-        //this can be used for reordering
-        //   $scope.moveItem = function(item, fromIndex, toIndex) {
-        //     $scope.items.splice(fromIndex, 1);
-        //     $scope.items.splice(toIndex, 0, item);
-        //   };
 
         //deleting things from a list
         $scope.onItemDelete = function(item) {
@@ -34,195 +166,18 @@ angular.module('scripts', ['nodes'])
         };
 
         //dummy data
-        $scope.items = [{
-                id: 0
-            },
-            {
-                id: 1
-            },
-            {
-                id: 2
-            },
-            {
-                id: 3
-            },
-            {
-                id: 4
-            },
-            {
-                id: 5
-            },
-            {
-                id: 6
-            },
-            {
-                id: 7
-            },
-            {
-                id: 8
-            },
-            {
-                id: 9
-            },
-            {
-                id: 10
-            },
-            {
-                id: 11
-            },
-            {
-                id: 12
-            },
-            {
-                id: 13
-            },
-            {
-                id: 14
-            },
-            {
-                id: 15
-            },
-            {
-                id: 16
-            },
-            {
-                id: 17
-            },
-            {
-                id: 18
-            },
-            {
-                id: 19
-            },
-            {
-                id: 20
-            },
-            {
-                id: 21
-            },
-            {
-                id: 22
-            },
-            {
-                id: 23
-            },
-            {
-                id: 24
-            },
-            {
-                id: 25
-            },
-            {
-                id: 26
-            },
-            {
-                id: 27
-            },
-            {
-                id: 28
-            },
-            {
-                id: 29
-            },
-            {
-                id: 30
-            },
-            {
-                id: 31
-            },
-            {
-                id: 32
-            },
-            {
-                id: 33
-            },
-            {
-                id: 34
-            },
-            {
-                id: 35
-            },
-            {
-                id: 36
-            },
-            {
-                id: 37
-            },
-            {
-                id: 38
-            },
-            {
-                id: 39
-            },
-            {
-                id: 40
-            },
-            {
-                id: 41
-            },
-            {
-                id: 42
-            },
-            {
-                id: 43
-            },
-            {
-                id: 44
-            },
-            {
-                id: 45
-            },
-            {
-                id: 46
-            },
-            {
-                id: 47
-            },
-            {
-                id: 48
-            },
-            {
-                id: 49
-            },
-            {
-                id: 50
-            }
-        ];
-
-        //refreshing page --may or may not need this--
-        $scope.doRefresh = function() {
-            console.log('Refreshing!');
-            $timeout(function() {
-                //simulate async response
-                $scope.items.push({
-                    id: Math.floor(Math.random() * 1000) + 4
-                });
-                //Stop the ion-refresher from spinning
-                $scope.$broadcast('scroll.refreshComplete');
-            }, 1000);
-        };
-
-        //function that allows has the selected data transfer to next page
-        $scope.gotomodifyScript = function(data) {
-            if (data !== null) {
-                Authorization.id = data.id;
-            }
-            else Authorization.id = null;
-        };
-
-        $ionicModal.fromTemplateUrl('templates/ScriptPage/zzlogin.html', {
-          scope: $scope
-        }).then(function(modal) {
-          $scope.modal = modal;
+        scriptManagement.getScripts(function(nodeList) {
+            $scope.formData.nodes = nodeList;
         });
 
-        // Triggered in the login modal to close it
-        $scope.closeLogin = function() {
-          $scope.modal.hide();
+        //function that allows has the selected data transfer to next page
+        $scope.gotomodifyScript = function(node, item) {
+            scriptHolder.setScript(node, item);
+            $state.go('app.modifyScript');
         };
 
-        // Open the login modal
-        $scope.login = function() {
-          $scope.modal.show();
+        $scope.createNewItem = function() {
+            scriptHolder.clearScript();
+            $state.go('app.modifyScript');
         };
     });
