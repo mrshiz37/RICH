@@ -1,10 +1,11 @@
 <ion-view view-title="Add/Edit Scripts">
-    <ion-header-bar class="bar-subheader bar-positive">
-        <label class="item item-input">
-                    <span class="input-label">Custom Name: </span>
-                    <input type="text" placeholder="" ng-model="input.id">
-                  </label>
+    <ion-header-bar class="bar-subheader bar">
+      <label class="item item-input">
+        <span class="input-label">Custom Name:</span>
+        <input type="text" placeholder="Custom Name " ng-model="input.id">
+      </label>
     </ion-header-bar>
+
     <ion-content>
         <ion-item ng-repeat="item in items" item="item" class="item-remove-animate" ng-click="" ng-href="#/app/modifyscript">
             Item {{ item.id }}
@@ -20,13 +21,13 @@
 
     <ion-footer-bar class="bar-subfooter bar">
         <div class="button-bar">
-            <span class="button button-positive icon-left ion-plus">Add Steps</a>
+            <span class="button button-positive icon-left ion-plus" ng-click="login()">Add Steps</span>
         </div>
     </ion-footer-bar>
 
     <ion-footer-bar class="bar">
         <div class="button-bar">
-            <span class="button button-positive icon-left ion-plus">Save</a>
+            <span class="button button-positive icon-left ion-plus">Save</span>
         </div>
     </ion-footer-bar>
 </ion-view>

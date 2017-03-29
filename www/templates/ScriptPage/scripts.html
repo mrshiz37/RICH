@@ -1,25 +1,11 @@
 <ion-view view-title="Scripts">
-    <!-- <ion-content> -->
     <!-- TODO Select node button (list) -->
-    <div class="padding">
-        TEST
-    </div>
-    <div class="list">
-        <label class="item item-input item-select">
-        <div class="input-label">
-          Node
-        </div>
-        <select>
-          <option>Paul's Room</option>
-          <option selected>Living Room</option>
-          <option>Bed Room</option>
-        </select>
-      </label>
-    </div>
-    <!-- TODO Add new script button which will lead to modal like window -->
-    <!-- <button class="button button-block button-positive" ng-click="login()">Add Script</button> -->
+
+
+
     <!-- TODO List of existing scripts which should have an edit and delete button for each item -->
-    <ion-header class="bar bar-positive bar-subheader" <div class="buttons">
+    <ion-header class="bar bar-positive bar-subheader">
+    <div class="buttons">
         <button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
         </div>
         <h1 class="title">List of Scripts</h1>
@@ -31,6 +17,7 @@
                     Add new script
                 </a>
         </div>
+
     </ion-header>
     <ion-content class="has-subheader">
         <ion-refresher on-refresh="doRefresh()">
@@ -47,5 +34,4 @@
             </ion-item>
         </ion-list>
     </ion-content>
-    <!-- </ion-content> -->
 </ion-view>
