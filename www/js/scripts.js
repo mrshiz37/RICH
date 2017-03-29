@@ -7,7 +7,24 @@ angular.module('scripts', ['nodes'])
     })
 
 
-    .controller('scriptsCtrl', function($scope, $timeout, $ionicModal, Authorization) {
+    .controller('scriptsCtrl', function($scope, $timeout, $ionicModal, Authorization, nodeService) {
+
+        // nodeService.getNodes(function(nodes) {
+        //     $scope.nodes = nodes;
+        // });
+
+
+        $scope.formData = {};
+        $scope.getRemoteBrands = function() {
+            /*$scope.brands = [ { brandName: 'a' },
+                              { brandName: 'b' },
+                              { brandName: 'c' },
+                              { brandName: 'custom' } ];*/
+            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteBrands').success(function(data) {
+                $scope.brands = data;
+            });
+        };
+
 
         //holds data for second page
         $scope.input = Authorization;
@@ -17,6 +34,15 @@ angular.module('scripts', ['nodes'])
             showDelete: false
         };
 
+        $scope.getRemoteBrands = function() {
+            /*$scope.brands = [ { brandName: 'a' },
+                              { brandName: 'b' },
+                              { brandName: 'c' },
+                              { brandName: 'custom' } ];*/
+            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteBrands').success(function(data) {
+                $scope.brands = data;
+            });
+        };
         //controls edit alert
         $scope.edit = function(item) {
             alert('Edit Item: ' + item.id);
@@ -32,7 +58,6 @@ angular.module('scripts', ['nodes'])
         $scope.onItemDelete = function(item) {
             $scope.items.splice($scope.items.indexOf(item), 1);
         };
-
         //dummy data
         $scope.items = [{
                 id: 0
@@ -66,126 +91,6 @@ angular.module('scripts', ['nodes'])
             },
             {
                 id: 10
-            },
-            {
-                id: 11
-            },
-            {
-                id: 12
-            },
-            {
-                id: 13
-            },
-            {
-                id: 14
-            },
-            {
-                id: 15
-            },
-            {
-                id: 16
-            },
-            {
-                id: 17
-            },
-            {
-                id: 18
-            },
-            {
-                id: 19
-            },
-            {
-                id: 20
-            },
-            {
-                id: 21
-            },
-            {
-                id: 22
-            },
-            {
-                id: 23
-            },
-            {
-                id: 24
-            },
-            {
-                id: 25
-            },
-            {
-                id: 26
-            },
-            {
-                id: 27
-            },
-            {
-                id: 28
-            },
-            {
-                id: 29
-            },
-            {
-                id: 30
-            },
-            {
-                id: 31
-            },
-            {
-                id: 32
-            },
-            {
-                id: 33
-            },
-            {
-                id: 34
-            },
-            {
-                id: 35
-            },
-            {
-                id: 36
-            },
-            {
-                id: 37
-            },
-            {
-                id: 38
-            },
-            {
-                id: 39
-            },
-            {
-                id: 40
-            },
-            {
-                id: 41
-            },
-            {
-                id: 42
-            },
-            {
-                id: 43
-            },
-            {
-                id: 44
-            },
-            {
-                id: 45
-            },
-            {
-                id: 46
-            },
-            {
-                id: 47
-            },
-            {
-                id: 48
-            },
-            {
-                id: 49
-            },
-            {
-                id: 50
             }
         ];
 
@@ -206,23 +111,22 @@ angular.module('scripts', ['nodes'])
         $scope.gotomodifyScript = function(data) {
             if (data !== null) {
                 Authorization.id = data.id;
-            }
-            else Authorization.id = null;
+            } else Authorization.id = null;
         };
 
-        $ionicModal.fromTemplateUrl('templates/ScriptPage/zzlogin.html', {
-          scope: $scope
+        $ionicModal.fromTemplateUrl('templates/ScriptPage/AddScriptSteps.html', {
+            scope: $scope
         }).then(function(modal) {
-          $scope.modal = modal;
+            $scope.modal = modal;
         });
 
         // Triggered in the login modal to close it
         $scope.closeLogin = function() {
-          $scope.modal.hide();
+            $scope.modal.hide();
         };
 
         // Open the login modal
         $scope.login = function() {
-          $scope.modal.show();
+            $scope.modal.show();
         };
     });
