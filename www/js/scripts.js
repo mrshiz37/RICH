@@ -7,7 +7,11 @@ angular.module('scripts', ['nodes'])
     })
 
 
+<<<<<<< HEAD
     .controller('scriptsCtrl', function($scope, $http ,$timeout, $ionicModal, Authorization, nodeService) {
+=======
+    .controller('scriptsCtrl', function($scope, $timeout, $ionicModal, Authorization, nodeService) {
+>>>>>>> da942dfd967805d7d032973dd2e637d58691f30c
 
         // nodeService.getNodes(function(nodes) {
         //     $scope.nodes = nodes;
@@ -20,9 +24,13 @@ angular.module('scripts', ['nodes'])
                               { brandName: 'b' },
                               { brandName: 'c' },
                               { brandName: 'custom' } ];*/
+<<<<<<< HEAD
             // $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteBrands').success(function(data) {
             $http.get('http://192.168.254.1:3000/addRemoteBackend/getRemoteBrands').success(function(data) {
 
+=======
+            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteBrands').success(function(data) {
+>>>>>>> da942dfd967805d7d032973dd2e637d58691f30c
                 $scope.brands = data;
             });
         };

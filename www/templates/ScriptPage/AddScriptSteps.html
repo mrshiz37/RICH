@@ -1,5 +1,4 @@
 <ion-modal-view>
-  <!-- TODO: Need to have this working in backend -->
   <ion-header-bar>
     <h1 class="title">Add Steps</h1>
     <div class="buttons">
@@ -9,13 +8,13 @@
   <ion-content>
     <form ng-submit="doLogin()">
       <div class="list">
-        <label class="item item-input item-select padding">
-          <div class="input-label"> Remote</div>
-          <select ng-model="formData.selectedBrand" ng-options="brand.brandName for brand in brands" ng-change="getRemoteModels()"></select>
+        <label class="item item-input">
+          <span class="input-label">Remote</span>
+          <input type="text" ng-model="loginData.username">
         </label>
-        <label class="item item-input item-select padding">
-          <div class="input-label"> Buttons</div>
-          <select ng-model="formData.selectedBrand" ng-options="brand.brandName for brand in brands" ng-change="getRemoteModels()" ng-disabled="!formData.selectedNode"></select>
+        <label class="item item-input">
+          <span class="input-label">Button</span>
+          <input type="password" ng-model="loginData.password">
         </label>
         <label class="item">
           <button class="button button-block button-positive" ng-click="closeLogin()" type="submit">Add</button>
