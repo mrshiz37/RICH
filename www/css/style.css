@@ -13,11 +13,11 @@
   padding-right: 20px;
 }
 
-
 .padding {
   padding: 10px;
 }
 
-/*.bar-subheader {
-  height: auto !important;
-}*/
+.custom-dark{
+   color : #30393A !important; // text
+   background-color:blue!important; // for bg color
+}

@@ -7,7 +7,7 @@ angular.module('scripts', ['nodes'])
     })
 
 
-    .controller('scriptsCtrl', function($scope, $timeout, Authorization) {
+    .controller('scriptsCtrl', function($scope, $timeout, $ionicModal, Authorization) {
 
         //holds data for second page
         $scope.input = Authorization;
@@ -208,5 +208,21 @@ angular.module('scripts', ['nodes'])
                 Authorization.id = data.id;
             }
             else Authorization.id = null;
+        };
+
+        $ionicModal.fromTemplateUrl('templates/ScriptPage/zzlogin.html', {
+          scope: $scope
+        }).then(function(modal) {
+          $scope.modal = modal;
+        });
+
+        // Triggered in the login modal to close it
+        $scope.closeLogin = function() {
+          $scope.modal.hide();
+        };
+
+        // Open the login modal
+        $scope.login = function() {
+          $scope.modal.show();
         };
     });

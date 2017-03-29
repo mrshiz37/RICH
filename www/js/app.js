@@ -73,7 +73,7 @@ angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', '
         url: '/scripts',
         views: {
           'menuContent': {
-            templateUrl: 'templates/scripts.html',
+            templateUrl: 'templates/ScriptPage/scripts.html',
             controller: 'scriptsCtrl'
           }
         }
@@ -83,7 +83,7 @@ angular.module('main', ['ionic', 'main.controllers', 'ngCordova', 'addRemote', '
         url: '/modifyscript',
         views: {
           'menuContent': {
-            templateUrl: 'templates/modifyScript.html',
+            templateUrl: 'templates/ScriptPage/modifyScript.html',
             controller: 'scriptsCtrl'
           }
         }
