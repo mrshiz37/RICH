@@ -7,6 +7,8 @@
     </ion-header-bar>
 
     <ion-content>
+
+      <!-- TODO: Generate this list via API call -->
         <ion-item ng-repeat="item in items" item="item" class="item-remove-animate" ng-click="" ng-href="#/app/modifyscript">
             Item {{ item.id }}
             <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
@@ -27,7 +29,7 @@
 
     <ion-footer-bar class="bar">
         <div class="button-bar">
-            <span class="button button-positive icon-left ion-plus">Save</span>
+            <span class="button button-balanced icon-left ion-plus">Save</span>
         </div>
     </ion-footer-bar>
 </ion-view>

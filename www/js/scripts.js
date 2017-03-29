@@ -7,7 +7,7 @@ angular.module('scripts', ['nodes'])
     })
 
 
-    .controller('scriptsCtrl', function($scope, $timeout, $ionicModal, Authorization, nodeService) {
+    .controller('scriptsCtrl', function($scope, $http ,$timeout, $ionicModal, Authorization, nodeService) {
 
         // nodeService.getNodes(function(nodes) {
         //     $scope.nodes = nodes;
@@ -20,7 +20,9 @@ angular.module('scripts', ['nodes'])
                               { brandName: 'b' },
                               { brandName: 'c' },
                               { brandName: 'custom' } ];*/
-            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteBrands').success(function(data) {
+            // $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/addRemoteBackend/getRemoteBrands').success(function(data) {
+            $http.get('http://192.168.254.1:3000/addRemoteBackend/getRemoteBrands').success(function(data) {
+
                 $scope.brands = data;
             });
         };
