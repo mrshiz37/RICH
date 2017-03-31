@@ -1,0 +1,11 @@
+<div>
+  When you are ready to start recording, enter a custom name in the box below and press the button. (Note: Spaces are not allowed in remote names)
+</div>
+<div class="padding">
+    <label class="item item-input">
+      <input type="text" placeholder="Enter a custom name..." ng-model="formData.custom_name" ng-trim="false" ng-change="formData.custom_name = formData.custom_name.split(' ').join('')">
+    </label>
+</div>
+<div class="padding">
+    <button class="button button-block button-positive" ng-click="startRecording()" ng-disabled="!formData.custom_name">Start Recording!</button>
+</div>

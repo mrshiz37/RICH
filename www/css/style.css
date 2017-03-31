@@ -13,7 +13,15 @@
   padding-right: 20px;
 }
 
-
 .padding {
   padding: 10px;
 }
+
+.custom-dark{
+   color : #30393A !important;
+   background-color:blue !important;
+}
+
+/*.bar-subheader {
+  height: auto !important;
+}*/
