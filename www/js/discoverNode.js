@@ -42,7 +42,8 @@ angular.module('discoverNode', ['nodes'])
         $scope.addNode = function() {
             var node = {
                 custom_name: $scope.formData.custom_name,
-                ip_address: $scope.formData.selectedNode
+                ip_address: $scope.formData.selectedNode,
+                scripts: []
             };
             nodeService.addNode(node, function() {
                 $state.go('app.nodes');

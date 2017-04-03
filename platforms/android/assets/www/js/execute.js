@@ -1,9 +1,9 @@
-angular.module('execute', ['scripts'])
-    .controller('executeCtrl', function($scope, $state, scriptManagement) {
+angular.module('execute', ['nodes'])
+    .controller('executeCtrl', function($scope, $http, $state, nodeService) {
         $scope.formData = {};
         $scope.$on('$ionicView.enter', function() {
-            scriptManagement.getScripts(function(nodeAndScriptList) {
-                $scope.formData.nodeScriptList = nodeAndScriptList;
+            nodeService.getNodes(function(nodes) {
+                $scope.formData.nodeScriptList = nodes;
             });
         });
 
@@ -99,7 +99,7 @@ angular.module('execute', ['scripts'])
         };
 
         $scope.executeScript = function() {
-          $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeSingleButton', JSON.stringify($scope.formData.selectedScript)).success(function(data) {});
+          $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeScript', {params:{script: JSON.stringify($scope.formData.selectedScript)}}).success(function(data) {});
         };
 
 

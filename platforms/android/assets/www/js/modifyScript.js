@@ -1,5 +1,5 @@
 angular.module('modifyScript', ['scripts', 'nodes'])
-    .controller('modifyScriptCtrl', function($scope, $timeout, $state, $ionicModal, $ionicPopup, $ionicHistory, scriptHolder, nodeService, scriptManagement) {
+    .controller('modifyScriptCtrl', function($scope, $http, $timeout, $state, $ionicModal, $ionicPopup, $ionicHistory, scriptHolder, nodeService) {
         $scope.$on('$ionicView.enter', function() {
             $scope.formData = {};
             $scope.updateFlag = true;
@@ -7,34 +7,34 @@ angular.module('modifyScript', ['scripts', 'nodes'])
                 $scope.formData.script = script;
                 $scope.formData.node = node;
                 if ($scope.formData.script.name === "") {
-                  nodeService.getNodes(function(returnedNodes) {
-                    $scope.formData.nodes = returnedNodes;
-                  });
-                  var newScriptPopup = $ionicPopup.show({
-                      templateUrl: 'templates/partials/scriptsPopup.html',
-                      title: 'New Script',
-                      scope: $scope,
-                      buttons: [{
-                              text: 'Cancel'
-                          },
-                          {
-                              text: '<b>Save</b>',
-                              type: 'button-positive',
-                              onTap: function(e) {
-                                  if($scope.formData.script.name === "") {
-                                    e.preventDefault();
-                                  }
-                                  else {
-                                    return $scope.formData.selectedNode;
-                                  }
-                              }
-                          }
-                      ]
-                  });
-                  newScriptPopup.then(function(res) {
-                    $scope.formData.node = res;
-                    $scope.updateFlag = false;
-                  });
+                    nodeService.getNodes(function(returnedNodes) {
+                        $scope.formData.nodes = returnedNodes;
+                    });
+                    var newScriptPopup = $ionicPopup.show({
+                        templateUrl: 'templates/partials/scriptsPopup.html',
+                        title: 'New Script',
+                        scope: $scope,
+                        buttons: [{
+                                text: 'Cancel'
+                            },
+                            {
+                                text: '<b>Save</b>',
+                                type: 'button-positive',
+                                onTap: function(e) {
+                                    if ($scope.formData.script.name === "") {
+                                        e.preventDefault();
+                                    } else {
+                                        return $scope.formData.selectedNode;
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                    newScriptPopup.then(function(res) {
+                        $scope.formData.node = res;
+                        $scope.updateFlag = false;
+
+                    });
                 }
             });
             $scope.formData.count = 1;
@@ -44,14 +44,16 @@ angular.module('modifyScript', ['scripts', 'nodes'])
             showDelete: false
         };
 
-        $http.get('http://' + node.ip_address + ':3000/editScriptsBackend/getRemotes').success(function(data) {
-          $scope.remotes = data;
-        });
-
         $ionicModal.fromTemplateUrl('templates/scriptModal.html', {
             scope: $scope
         }).then(function(modal) {
             $scope.modal = modal;
+
+        });
+        $scope.$on('modal.shown', function() {
+          $http.get('http://' + $scope.formData.node.ip_address + ':3000/editScriptsBackend/getRemotes').success(function(data) {
+              $scope.remotes = data;
+          });
         });
         $scope.$on('modal.hidden', function() {
             $scope.formData.selectedRemote = null;
@@ -116,16 +118,16 @@ angular.module('modifyScript', ['scripts', 'nodes'])
         };
 
         $scope.save = function() {
-          var script = {
-            name: $scope.formData.script.name,
-            steps: $scope.formData.script.steps
-          };
+            var script = {
+                name: $scope.formData.script.name,
+                steps: $scope.formData.script.steps
+            };
 
-          var node = $scope.formData.node;
+            var node = $scope.formData.node;
 
-          scriptManagement.updateScript(node, script, $scope.updateFlag, function() {
-            $ionicHistory.goBack();
-          });
+            nodeService.updateScript(node, script, $scope.updateFlag, function() {
+                $ionicHistory.goBack();
+            });
         };
 
         $scope.$on('$destroy', function() {

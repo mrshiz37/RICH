@@ -19,7 +19,7 @@ angular.module('nodes', [])
         this.addNode = function(node, fn) {
             nodes.push(node);
             console.log(nodes);
-            $cordovaFile.writeFile(cordova.file.dataDirectory, "nodes.json", JSON.stringify(nodes), true)
+            $cordovaFile.writeFile(cordova.file.dataDirectory, "nodes.json", angular.toJson(nodes), true)
                 .then(function(success) {
                     console.log("Success!");
                     fn();
@@ -34,7 +34,7 @@ angular.module('nodes', [])
                     nodes.splice(i, 1);
                 }
             }
-            $cordovaFile.writeFile(cordova.file.dataDirectory, "nodes.json", JSON.stringify(node_list), true)
+            $cordovaFile.writeFile(cordova.file.dataDirectory, "nodes.json", angular.toJson(node_list), true)
                 .then(function(success) {
                     console.log("Success!");
                 }, function(error) {});
@@ -48,12 +48,69 @@ angular.module('nodes', [])
           });
         };
         this.writeFile = function(newNodeList) {
-          $cordovaFile.writeFile(cordova.file.dataDirectory, "nodes.json", JSON.stringify(newNodeList), true)
+          console.log(newNodeList);
+          $cordovaFile.writeFile(cordova.file.dataDirectory, "nodes.json", angular.toJson(newNodeList), true)
               .then(function(success) {
                   console.log("Success!");
               }, function(error) {
                   // error
               });
+        };
+
+        this.updateScriptName = function(oldName, newName, node, fn) {
+            var obj = {
+                oldName: oldName,
+                newName: newName
+            };
+
+            for(var i = 0; i < nodes.length; i++) {
+              if(nodes[i].custom_name === node.custom_name) {
+                for(var j = 0; j < nodes[i].scripts.length; j++) {
+                  if(nodes[i].scripts[j].name === oldName) {
+                    nodes[i].scripts[j].name = newName;
+                    this.writeFile(nodes);
+                  }
+                }
+              }
+            }
+            fn(nodes);
+        };
+
+        this.updateScript = function(node, script, updateFlag, fn) {
+            if (updateFlag) {
+              for(var i = 0; i < nodes.length; i++) {
+                if(nodes[i].custom_name === node.custom_name) {
+                  for(var j = 0; j < nodes[i].scripts.length; j++) {
+                    if(nodes[i].scripts[j].name === script.name) {
+                      nodes[i].scripts[j] = script;
+                      this.writeFile(nodes);
+                    }
+                  }
+                }
+              }
+            } else {
+              for(var i = 0; i < nodes.length; i++) {
+                if(nodes[i].custom_name === node.custom_name) {
+                  nodes[i].scripts.push(script);
+                  this.writeFile(nodes);
+                }
+              }
+            }
+            fn();
+        };
+
+        this.deleteScript = function(node, script, fn) {
+          for(var i = 0; i < nodes.length; i++) {
+            if(nodes[i].custom_name === node.custom_name) {
+              for(var j = 0; j < nodes[i].scripts.length; j++) {
+                if(nodes[i].scripts[j].name === script.name) {
+                  nodes[i].scripts.splice(j, 1);
+                  this.writeFile(nodes);
+                }
+              }
+            }
+          }
+          this.writeFile(nodes);
         };
     })
     .controller('nodesCtrl', function($scope, $state, nodeService) {
