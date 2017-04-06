@@ -81,6 +81,10 @@ angular.module('modifyScript', ['scripts', 'nodes'])
             }
         };
 
+        $scope.updateButtons = function() {
+            $scope.selectedRemote.buttons.unshift({"button": "WAIT"});
+        };
+
         $scope.onHold = function(step) {
             $scope.formData.count = step.count;
             var myPopup = $ionicPopup.show({
