@@ -7,7 +7,7 @@
         <div class="list">
             <label class="item item-input item-select">
               <span class="input-label">Remote:</span>
-              <select ng-model="formData.selectedRemote" ng-options="remote.custom_name for remote in remotes"></select>
+              <select ng-model="formData.selectedRemote" ng-options="remote.custom_name for remote in remotes" ng-change="updateButtons()"></select>
             </label>
             <label class="item item-input item-select">
               <span class="input-label">Button:</span>
