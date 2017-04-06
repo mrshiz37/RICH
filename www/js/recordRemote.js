@@ -136,7 +136,7 @@ angular.module('recordRemote', ['nodes'])
             $http.post('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
                 console.log(data);
             });
-            $scope.formData.selectedButton.button = "";
+            $scope.formData.selectedButton.button = $scope.formData.buttons[0].button;
         };
 
         $scope.$on("$destroy", function(event, data) {
