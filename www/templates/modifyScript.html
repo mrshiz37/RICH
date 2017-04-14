@@ -1,25 +1,30 @@
 <ion-view view-title="Add/Edit Script Steps">
-  <div class="bar bar-subheader bar-positive">
-      <div class="buttons">
-          <button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
-      </div>
-      <h1 class="title">{{formData.script.name}}</h1>
-      <div class="buttons">
-        <button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">Reorder</button>
-      </div>
-  </div>
-    <ion-content class="has-subheader">
+    <div class="bar bar-subheader bar-positive">
+        <div class="buttons">
+            <button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+        </div>
+        <h1 class="title">{{formData.script.name}}</h1>
+        <div class="buttons">
+            <button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">Reorder</button>
+        </div>
+    </div>
+    <ion-content class="has-subheader has-subfooter has-footer">
         <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
             <ion-item ng-repeat="step in formData.script.steps" on-hold="onHold(step)">{{step.remote}} : {{step.button}}
-              <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(step)"></ion-delete-button>
-              <ion-reorder-button class="ion-navicon" on-reorder="moveItem(step, $fromIndex, $toIndex)"></ion-reorder-button>
+                <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(step)"></ion-delete-button>
+                <ion-reorder-button class="ion-navicon" on-reorder="moveItem(step, $fromIndex, $toIndex)"></ion-reorder-button>
             </ion-item>
         </ion-list>
-        <div class="padding">
-          <button class="button button-positive icon-left ion-plus" ng-click="modal.show()">Add Steps</button>
-        </div>
-        <div class="padding">
-          <button class="button button-positive icon-left ion-plus" ng-click="save()">Save</button>
-        </div>
     </ion-content>
+
+    <ion-footer-bar class="bar-subfooter">
+      <div class="button-bar">
+        <button class="button button-positive icon-left ion-plus" ng-click="modal.show()">Add Steps</button>
+      </div>
+    </ion-footer-bar>
+    <ion-footer-bar class="bar-footer">
+      <div class="button-bar">
+        <button class="button button-positive icon-left ion-plus" ng-click="save()">Save</button>
+      </div>
+    </ion-footer-bar>
 </ion-view>

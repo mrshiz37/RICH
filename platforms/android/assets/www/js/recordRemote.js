@@ -77,7 +77,7 @@ angular.module('recordRemote', ['nodes'])
                         $scope.formData.remoteFlag = false;
                         $scope.formData.toggleFlag = false;
                         $scope.formData.savedFlag = false;
-                        $scope.output = "Now, choose a you want to record on your remote from the list below. " +
+                        $scope.output = "Now, choose a button you want to record on your remote from the list below. " +
                             "If you are finished recording, do not choose a button and press Submit";
                     } else if (remoteReg.test(data)) {
                         $scope.formData.buttonFlag = false;
@@ -125,18 +125,20 @@ angular.module('recordRemote', ['nodes'])
             loadPromise = $timeout(getData, mill);
         };
 
-        $scope.writeData = function() {
+        $scope.writeData = function(chosenButton) {
             console.log($scope.formData.selectedButton.button);
             var button = {
                 button: $scope.formData.selectedButton.button,
                 custom_name: $scope.formData.custom_name,
                 doneFlag: false
             };
-
+            console.log(chosenButton);
             $http.post('http://' + $scope.formData.node.ip_address + ':3000/recordRemoteBackend/postRecordData', JSON.stringify(button)).success(function(data) {
                 console.log(data);
+                $scope.buttons.splice($scope.buttons.indexOf(chosenButton), 1);
+                $scope.formData.selectedButton = "";
             });
-            $scope.formData.selectedButton = '0';
+
         };
 
         $scope.$on("$destroy", function(event, data) {

@@ -8,7 +8,7 @@
     </div>
     <select ng-model="formData.selectedButton" ng-options="button.button for button in buttons"></select>
   </label>
-  <button class="button button-block button-positive" ng-click="writeData()">Record Button</button>
+  <button class="button button-block button-positive" ng-click="writeData(formData.selectedButton)">Submit</button>
 </div>
 
 <div class="padding" ng-if="formData.remoteFlag">{{output}}</div>
