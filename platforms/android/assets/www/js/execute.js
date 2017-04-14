@@ -16,6 +16,7 @@ angular.module('execute', ['nodes'])
 
         function initBools(fn) {
             $scope.formData.keyRewind = false;
+            $scope.formData.keyPower = false;
             $scope.formData.keyStop = false;
             $scope.formData.keyPause = false;
             $scope.formData.keyPlay = false;
@@ -44,6 +45,8 @@ angular.module('execute', ['nodes'])
             for (var i = 0; i < $scope.formData.selectedRemote.buttons.length; i++) {
                 if ($scope.formData.selectedRemote.buttons[i].button === "KEY_REWIND") {
                     $scope.formData.keyRewind = true;
+                } else if ($scope.formData.selectedRemote.buttons[i].button === "KEY_POWER") {
+                    $scope.formData.keyPower = true;
                 } else if ($scope.formData.selectedRemote.buttons[i].button === "KEY_STOP") {
                     $scope.formData.keyStop = true;
                 } else if ($scope.formData.selectedRemote.buttons[i].button === "KEY_PAUSE") {
@@ -85,21 +88,28 @@ angular.module('execute', ['nodes'])
                 }
             }
         };
-        $scope.executeButton = function(button) {
+        $scope.executeButton = function(chosenButton) {
+            console.log(chosenButton);
             var script = {
                 name: "SingleKey",
                 steps: [{
-                    remote: $scope.formData.selectedRemote,
-                    button: button,
+                    remote: $scope.formData.selectedRemote.custom_name,
+                    button: chosenButton,
                     count: 1
                 }]
             };
+            console.log(script);
             $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeScript', {params:{script: JSON.stringify(script)}}).success(function(data) {});
         };
 
         $scope.executeScript = function() {
           $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeScript', {params:{script: JSON.stringify($scope.formData.selectedScript)}}).success(function(data) {});
+          $scope.formData.selectedScript = '0';
         };
 
+        $scope.$on("$ionicView.beforeLeave", function(event, data) {
+          $scope.formData.scripts = [];
+          $scope.formData.remotes = [];
+        });
 
     });

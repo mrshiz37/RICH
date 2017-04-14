@@ -106,6 +106,7 @@ angular.module('modifyScript', ['scripts', 'nodes'])
             myPopup.then(function(res) {
                 step.count = $scope.formData.count;
                 console.log(step);
+                $scope.formData.count = 1;
             });
 
         };

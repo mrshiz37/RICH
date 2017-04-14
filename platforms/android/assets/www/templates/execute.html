@@ -23,6 +23,7 @@
 
 <div>
   <center><!--Command Header-->
+    <a class="button button-icon icon ion-power" ng-disabled="!(formData.selectedNode && formData.keyPower)" ng-click="executeButton('KEY_POWER')"></a>
     <a class="button button-icon icon ion-skip-backward" ng-disabled="!(formData.selectedNode && formData.keyRewind)" ng-click="executeButton('KEY_REWIND')"></a>
     <a class="button button-icon icon ion-stop" ng-disabled="!(formData.selectedNode && formData.keyStop)" ng-click="executeButton('KEY_STOP')"></a>
     <a class="button button-icon icon ion-pause" ng-disabled="!(formData.selectedNode && formData.keyPause)" ng-click="executeButton('KEY_PAUSE')"></a>
