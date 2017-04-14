@@ -82,7 +82,7 @@ angular.module('modifyScript', ['scripts', 'nodes'])
         };
 
         $scope.updateButtons = function() {
-            $scope.selectedRemote.buttons.unshift({"button": "WAIT"});
+            $scope.formData.selectedRemote.buttons.unshift({"button": "WAIT"});
         };
 
         $scope.onHold = function(step) {
@@ -106,6 +106,7 @@ angular.module('modifyScript', ['scripts', 'nodes'])
             myPopup.then(function(res) {
                 step.count = $scope.formData.count;
                 console.log(step);
+                $scope.formData.count = 1;
             });
 
         };

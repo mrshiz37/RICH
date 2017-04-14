@@ -94,12 +94,17 @@ angular.module('execute', ['nodes'])
                     count: 1
                 }]
             };
-            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeScript', {params:{script: JSON.stringify($scope.formData.selectedScript)}}).success(function(data) {});
+            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeScript', {params:{script: JSON.stringify(script)}}).success(function(data) {});
         };
 
         $scope.executeScript = function() {
           $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeScript', {params:{script: JSON.stringify($scope.formData.selectedScript)}}).success(function(data) {});
+          $scope.formData.selectedScript = '0';
         };
 
+        $scope.$on("$ionicView.beforeLeave", function(event, data) {
+          $scope.formData.scripts = [];
+          $scope.formData.remotes = [];
+        });
 
     });

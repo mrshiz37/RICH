@@ -94,8 +94,7 @@ angular.module('execute', ['nodes'])
                     count: 1
                 }]
             };
-
-            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeSingleButton', JSON.stringify(script)).success(function(data) {});
+            $http.get('http://' + $scope.formData.selectedNode.ip_address + ':3000/editScriptsBackend/executeScript', {params:{script: JSON.stringify(script)}}).success(function(data) {});
         };
 
         $scope.executeScript = function() {
