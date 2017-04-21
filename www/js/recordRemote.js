@@ -56,7 +56,7 @@ angular.module('recordRemote', ['nodes'])
         $scope.formData.toggleFlag = false;
         $scope.formData.savedFlag = false;
 
-        var loadTime = 1000; //Load the data every second
+        var loadTime = 500; //Load the data every second
         var errorCount = 0; //Counter for the server errors
         var loadPromise; //Pointer to the promise created by the Angular $timout service
 

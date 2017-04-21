@@ -76,7 +76,7 @@
 </div>
 
 <!--Execute Loaded Script-->
-<button class="button button-full button-balanced" ng-click="executeScript()" ng-disabled="!formData.selectedScript">
+<button class="button button-full button-balanced" ng-click="executeScript()" ng-disabled="!formData.selectedScript || formData.selectedScript === '0'">
 <center>  Execute Script</center>
 </button>
 </div>

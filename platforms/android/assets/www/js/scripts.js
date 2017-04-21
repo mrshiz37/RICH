@@ -37,9 +37,13 @@ angular.module('scripts', ['nodes'])
                 inputType: 'text',
                 inputPlaceholder: script.name
             }).then(function(res) {
+              console.log(script.name);
+              console.log(res);
+              if(res !== undefined && res !== "") {
                 nodeService.updateScriptName(script.name, res, node, function(nodeList) {
                     $scope.formData.nodes = nodeList;
                 });
+              }
             });
         };
 
