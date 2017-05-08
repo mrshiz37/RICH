@@ -18,6 +18,7 @@ angular.module('discoverNode', ['nodes'])
         }
 
         var success = function(devices) {
+          console.log(devices);
             for (var i = 0; i < devices.length; i++) {
                 if (devices[i].Server === "RICH") {
                     var str = devices[i].LOCATION;

@@ -94,6 +94,7 @@ angular.module('execute', ['nodes'])
                 name: "SingleKey",
                 steps: [{
                     remote: $scope.formData.selectedRemote.custom_name,
+                    model: $scope.formData.selectedRemote.model,
                     button: chosenButton,
                     count: 1
                 }]

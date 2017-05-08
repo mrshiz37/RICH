@@ -64,6 +64,7 @@ angular.module('modifyScript', ['scripts', 'nodes'])
         $scope.addStep = function() {
             var step = {
                 remote: $scope.formData.selectedRemote.custom_name,
+                model: $scope.formData.selectedRemote.model,
                 button: $scope.formData.selectedButton.button,
                 count: $scope.formData.count
             };
